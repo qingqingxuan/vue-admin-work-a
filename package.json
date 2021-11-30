@@ -1,0 +1,47 @@
+{
+  "name": "vue-admin-work-a",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.0.1",
+    "@vueuse/core": "^7.1.2",
+    "ant-design-vue": "^3.0.0-alpha.12",
+    "axios": "^0.24.0",
+    "echarts": "^5.1.2",
+    "js-cookie": "^3.0.1",
+    "mockjs": "^1.1.0",
+    "path-browserify": "^1.0.1",
+    "qs": "^6.10.1",
+    "sass": "^1.43.5",
+    "sass-loader": "^12.3.0",
+    "tiny-emitter": "^2.1.0",
+    "vue": "^3.2.16",
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.1",
+    "@types/qs": "^6.9.7",
+    "@vitejs/plugin-vue": "^1.9.3",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-define-config": "^1.0.9",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.13.0",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0",
+    "postcss": "^8.4.3",
+    "prettier": "^2.3.2",
+    "tailwindcss": "^2.2.19",
+    "typescript": "^4.4.3",
+    "vite": "^2.6.4",
+    "vite-plugin-components": "^0.13.3",
+    "vite-plugin-svg-icons": "^1.0.5",
+    "vue-tsc": "^0.3.0"
+  }
+}
