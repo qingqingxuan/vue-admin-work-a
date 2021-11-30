@@ -31,9 +31,9 @@
       <section class="footer-wrapper">
         <Footer />
       </section>
-      <n-back-top :listen-to="listenTo1" />
+      <a-back-top :target="listenTo1" />
     </div>
-    <n-back-top :listen-to="listenTo2" />
+    <a-back-top :target="listenTo2" />
   </div>
 </template>
 
@@ -53,16 +53,16 @@
     },
     setup() {
       const store = useLayoutStore()
-      const listenTo1 = ref<HTMLElement | null>(null)
-      const listenTo2 = ref<HTMLElement | null>(null)
+      const listenTo1 = ref()
+      const listenTo2 = ref()
       const isShowHeader = computed(() => store?.isShowHeader())
       const isShowTabbar = computed(() => store.state.isShowTabbar)
       const router = useRouter()
       const route = useRoute()
       const title = useTitle(projectName + ' | ' + (route.meta.title as string))
       onMounted(() => {
-        listenTo1.value = document.querySelector('.main-base-style')
-        listenTo2.value = document.querySelector('.vaw-main-layout-container')
+        listenTo1.value = () => document.querySelector('.main-base-style')
+        listenTo2.value = () => document.querySelector('.vaw-main-layout-container')
       })
       return {
         state: store?.state,

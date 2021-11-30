@@ -38,6 +38,7 @@
     border-bottom: 1px solid var(--border-color);
     .avatar-wrapper {
       padding-right: 20px;
+      margin-left: 10px;
     }
     .right-wrapper {
       height: 100%;

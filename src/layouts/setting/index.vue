@@ -54,7 +54,7 @@
       <a-divider dashed>页签显示</a-divider>
       <div class="setting-item-wrapper">
         <span>显示页签</span>
-        <a-switch v-model:value="state.isShowTabbar" @update:value="onShowTabbar" />
+        <a-switch v-model:checked="state.isShowTabbar" @change="onShowTabbar" />
       </div>
       <a-divider dashed>主题颜色</a-divider>
       <a-space class="colors-wrapper">
@@ -109,7 +109,6 @@
       <div class="p-2">
         <div>水印内容</div>
         <a-input
-          @update:value="onWaterMarkChange"
           class="mt-1"
           size="small"
           v-model:value="state.waterMark"
@@ -321,8 +320,16 @@
         themeList.forEach((it) => {
           it.checked = it === item
         })
+        const root = document.documentElement
         if (item.themeId === 'dark') {
           exampleClick(sideExampleList[0])
+          import('ant-design-vue/dist/antd.dark.css').then(() => {
+            root.setAttribute('data-theme', 'dark')
+          })
+        } else {
+          import('ant-design-vue/dist/antd.css').then(() => {
+            root.setAttribute('data-theme', 'light')
+          })
         }
         store.changeTheme(item.themeId)
       }
@@ -347,13 +354,6 @@
           it.checked = it === item
         })
         store.changePrimaryColor(item)
-        ;(window as any).less
-          .modifyVars({
-            '@primary-color': '#f00',
-          })
-          .then((res: any) => {
-            console.log(res)
-          })
       }
       function isOpenWater(val: boolean) {
         store.changeOpenWaterMark(val)

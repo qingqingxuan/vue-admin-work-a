@@ -17,3 +17,6 @@ body,
 .ant-btn > span{
   display: inline-flex;
 }
+.anticon{
+  display: inline-flex !important;
+}

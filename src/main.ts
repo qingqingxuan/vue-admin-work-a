@@ -7,8 +7,6 @@ import { DeviceType } from './types/store'
 import './utils/router'
 import '../mock'
 import store, { key } from './store/store'
-import less from './styles/index.less'
-console.log(less)
 
 function getScreenType() {
   const width = document.body.clientWidth

@@ -4,7 +4,7 @@
       <SearchIcon />
     </span>
     <a-popover placement="bottom" trigger="click" :width="300">
-      <a-badge v-if="state.actionItem.showMessage" :count="badgeValue" class="badge-action-item">
+      <a-badge v-if="state.actionItem.showMessage" :count="badgeValue" class="badge-action-item action-item">
         <NotificationsIcon />
       </a-badge>
       <template #content>
@@ -98,6 +98,7 @@
 </script>
 
 <style lang="less" scoped>
+  @primary-color: #f00;
   .action-items-wrapper {
     position: relative;
     height: 100%;
@@ -105,30 +106,21 @@
     align-items: center;
     z-index: 1;
     .action-item {
+      font-size: 16px;
       min-width: 40px;
       display: flex;
       align-items: center;
+      justify-content: center;
+      height: 100%;
       &:hover {
         cursor: pointer;
-        color: var(--primary-color-hover);
+        background-color: var(--border-color);
       }
     }
     .badge-action-item {
-      cursor: pointer;
-      margin-right: 30px;
+      :deep(.ant-badge-count, .ant-badge-dot) {
+        transform: translate(0, 20%) !important;
+      }
     }
-  }
-</style>
-<style lang="less" scoped>
-  :deep(.n-input .n-input__border, .n-input .n-input__state-border) {
-    border: none;
-    border-bottom: 1px solid currentColor;
-  }
-  :deep(.el-input__inner) {
-    border: none !important;
-    height: 35px;
-    line-height: 35px;
-    color: currentColor !important;
-    background-color: transparent !important;
   }
 </style>

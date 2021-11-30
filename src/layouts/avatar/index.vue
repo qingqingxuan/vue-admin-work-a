@@ -3,7 +3,7 @@
     <a-dropdown trigger="hover" :options="options" size="large" @select="handleSelect">
       <div class="action-wrapper">
         <div class="avatar">
-          <a-avatar shape="circle" size="small" :src="state.userInfo.avatar" />
+          <a-avatar shape="circle" :size="30" :src="state.userInfo.avatar" />
         </div>
         <span class="nick-name">
           {{ state.userInfo.nickName }}
@@ -85,19 +85,6 @@
     .action-wrapper {
       display: flex;
       align-items: center;
-      .avatar {
-        width: calc(@logoHeight - 15px);
-        height: calc(@logoHeight - 15px);
-        display: flex;
-        align-items: center;
-        & > img {
-          border: 1px solid #f6f6f6;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 50%;
-        }
-      }
       .nick-name {
         margin: 0 5px;
         .tip {
