@@ -1,26 +1,34 @@
 <template>
   <div class="vaw-header-layout">
     <div class="logo-wrapper">
-      <Logo :always-show="true" />
+      <Logo :always-show="true" :showTitle="false" />
     </div>
-    <div style="flex: 1"></div>
-    <div v-if="state.device !== 'mobile'" class="right-wrapper">
-      <ActionItems />
+    <div class="menu-wrapper">
+      <ScrollerMenu mode="horizontal" :routes="routes" />
     </div>
-    <div class="avatar-wrapper">
-      <VAWavatar />
+    <div class="right-wrapper">
+      <template v-if="state.device !== 'mobile'">
+        <ActionItems />
+      </template>
+      <div class="avatar-wrapper">
+        <VAWavatar />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+  import { defineComponent, computed } from 'vue'
   import { useLayoutStore } from '../index'
   export default defineComponent({
     name: 'VAWHeader',
     setup() {
       const store = useLayoutStore()
+      const routes = computed(() => {
+        return store?.state.permissionRoutes.filter((it) => !!it.name)
+      })
       return {
+        routes,
         state: store?.state,
       }
     },
@@ -40,14 +48,19 @@
     box-sizing: border-box;
     border-bottom: 1px solid var(--border-color);
     .logo-wrapper {
-      width: @menuWidth;
+      width: calc(@menuWidth / 3);
     }
     .menu-wrapper {
       flex: 1;
+      max-width: 70%;
       overflow: hidden;
     }
     .right-wrapper {
+      max-width: 30%;
       height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
     .avatar-wrapper {
       padding-right: 15px;

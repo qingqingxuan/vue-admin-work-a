@@ -2,7 +2,11 @@
   <div
     class="vaw-main-layout-container scrollbar"
     :class="[
-      !state.isCollapse ? 'main-layout-open-status' : 'main-layout-close-status',
+      state.layoutMode == 'ttb'
+        ? ''
+        : !state.isCollapse
+        ? 'main-layout-open-status'
+        : 'main-layout-close-status',
       state.isFixedNavBar ? 'main-layout_fixed-nav-bar' : 'main-layout',
       !state.isFixedNavBar
         ? 'main-layout_padding-top__0'
@@ -13,13 +17,17 @@
   >
     <section
       :class="[
-        !state.isCollapse ? 'nav-bar-open-status' : 'nav-bar-close-status',
+        state.layoutMode == 'ttb'
+          ? 'nav-bar-open-status__ttb'
+          : !state.isCollapse
+          ? 'nav-bar-open-status'
+          : 'nav-bar-close-status',
         state.isFixedNavBar ? 'fixed-nav-bar' : '',
         !showNavBar ? 'tab-bar-top' : '',
       ]"
     >
       <NavBar v-if="showNavBar" />
-      <TabBar v-show="isShowTabbar" :show-humburger="isShowHeader" />
+      <TabBar v-show="isShowTabbar" />
     </section>
     <div
       class="main-base-style scrollbar"
@@ -55,7 +63,6 @@
       const store = useLayoutStore()
       const listenTo1 = ref()
       const listenTo2 = ref()
-      const isShowHeader = computed(() => store?.isShowHeader())
       const isShowTabbar = computed(() => store.state.isShowTabbar)
       const router = useRouter()
       const route = useRoute()
@@ -68,7 +75,6 @@
         state: store?.state,
         listenTo1,
         listenTo2,
-        isShowHeader,
         isShowTabbar,
       }
     },
@@ -84,6 +90,9 @@
   }
   .main-layout-close-status {
     margin-left: @minMenuWidth;
+  }
+  .nav-bar-open-status__ttb {
+    width: 100%;
   }
   .nav-bar-open-status.fixed-nav-bar {
     width: calc(100% - @menuWidth);

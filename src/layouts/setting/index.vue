@@ -108,11 +108,7 @@
       </div>
       <div class="p-2">
         <div>水印内容</div>
-        <a-input
-          class="mt-1"
-          size="small"
-          v-model:value="state.waterMark"
-        />
+        <a-input class="mt-1" size="small" v-model:value="state.waterMark" />
       </div>
       <a-divider dashed>颜色模式</a-divider>
       <div class="setting-item-wrapper">
@@ -131,6 +127,8 @@
   import { ModalDialogType } from '@/types/components'
   import { useChangeMenuWidth, useMenuWidth } from '@/hooks/useMenuWidth'
   import LeftBg from '@/assets/bg_img.webp'
+  import useTheme from '@/hooks/useTheme'
+  import { useCssVar } from '@vueuse/core'
   export default defineComponent({
     name: 'Setting',
     setup() {
@@ -323,12 +321,12 @@
         const root = document.documentElement
         if (item.themeId === 'dark') {
           exampleClick(sideExampleList[0])
-          import('ant-design-vue/dist/antd.dark.css').then(() => {
-            root.setAttribute('data-theme', 'dark')
+          import('../../styles/theme/antd.dark.min.css').then(() => {
+            useTheme(root, 'dark')
           })
         } else {
-          import('ant-design-vue/dist/antd.css').then(() => {
-            root.setAttribute('data-theme', 'light')
+          import('../../styles/theme/antd.min.css').then(() => {
+            useTheme(root, 'light')
           })
         }
         store.changeTheme(item.themeId)

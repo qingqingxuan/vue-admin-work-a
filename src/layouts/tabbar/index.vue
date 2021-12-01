@@ -1,8 +1,5 @@
 <template>
   <div class="vaw-tab-bar-container">
-    <div v-if="showHumburger" class="humburger-wrapper">
-      <Humburger />
-    </div>
     <div
       :class="{ 'tab-humburger-wrapper': showHumburger }"
       class="flex items-center justify-center h-full"
@@ -212,7 +209,6 @@
           })
       },
       itemClick(path: string | undefined, e: MouseEvent) {
-        console.log(e)
         this.handleTabClick(e.target as HTMLElement, path || '/')
       },
       itemChildClick(path: string | undefined, e: MouseEvent) {
@@ -447,6 +443,9 @@
           transition: all 0.2s ease-in-out;
         }
       }
+    }
+    .tab-item + .tab-item {
+      margin-left: 10px;
     }
     .arrow-wrapper {
       cursor: pointer;

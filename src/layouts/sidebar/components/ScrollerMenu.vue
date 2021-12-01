@@ -1,9 +1,9 @@
 <template>
-  <div class="scrollbar">
+  <div :class="{ scrollbar: menuMode === 'inline' }">
     <a-menu
-      mode="inline"
+      :mode="menuMode"
       :theme="theme"
-      :inline-collapsed="state.isCollapse"
+      :inline-collapsed="state.device === 'mobile' ? false : state.isCollapse"
       v-model:selectedKeys="defaultPath"
       v-model:openKeys="defaultExpandKeys"
       @select="onMenuClick"
@@ -31,7 +31,6 @@
     defineComponent,
     onMounted,
     PropType,
-    reactive,
     ref,
     shallowReactive,
     watch,
@@ -51,18 +50,25 @@
         type: Object as PropType<Array<RouteRecordRawWithHidden>>,
         require: true,
       },
+      mode: {
+        type: String,
+        default: 'inline',
+      },
     },
     setup(props) {
       const store = useLayoutStore()
       const menuOptions = shallowReactive([] as Array<any>)
       const defaultPath = ref([] as Array<string>)
       const defaultExpandKeys = ref([] as Array<string>)
+      const menuMode = computed(() => props.mode)
       const theme = computed(() => {
-        if (store.state.sideBarBgColor === 'white') {
-          return 'light'
-        } else {
+        if (store.state.theme === 'dark') {
           return 'dark'
         }
+        if (store.state.layoutMode === 'ttb') {
+          return 'light'
+        }
+        return store.state.sideBarBgColor === 'image' ? 'dark' : store.state.sideBarBgColor
       })
       const currentRoute = useRoute()
       const router = useRouter()
@@ -77,12 +83,17 @@
         menuOptions.push(...tempMenus)
       }
       function handleExpandPath() {
-        const paths = currentRoute.fullPath.split('/')
-        paths.forEach((it) => {
-          if (it && !defaultExpandKeys.value.includes('/' + it)) {
-            defaultExpandKeys.value.push('/' + it)
-          }
-        })
+        if (props.mode === 'inline') {
+          const paths = currentRoute.fullPath.split('/')
+          const pathList = paths
+            .filter((it) => !!it)
+            .reduce((pre: Array<string>, cur: string) => {
+              const lastItem = pre[pre.length - 1] || ''
+              pre.push(lastItem + '/' + cur)
+              return pre
+            }, [])
+          defaultExpandKeys.value = pathList
+        }
       }
       function onMenuClick({ key }: any) {
         if (isExternal(key)) return
@@ -94,8 +105,7 @@
       watch(
         () => currentRoute.fullPath,
         (newVal) => {
-          defaultPath.value.length = 0
-          defaultPath.value.push(newVal)
+          defaultPath.value = [newVal]
           handleExpandPath()
         }
       )
@@ -103,6 +113,7 @@
         handleMenu(props.routes)
       })
       return {
+        menuMode,
         defaultPath,
         defaultExpandKeys,
         state: store?.state,

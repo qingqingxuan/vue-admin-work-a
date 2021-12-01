@@ -16,7 +16,6 @@
 <script lang="ts">
   import { computed, defineComponent } from 'vue'
   import { useLayoutStore } from '../index'
-  import { SideTheme, ThemeMode } from '../../types/store'
   export default defineComponent({
     name: 'SideBar',
     props: {
@@ -47,7 +46,6 @@
     },
   })
 </script>
-
 <style scoped lang="less">
   .sidebar-bg-img {
     background-image: url('../../assets/bg_img.webp') !important;
@@ -60,9 +58,16 @@
     }
   }
   .sidebar-bg-dark {
-    background-color: #001529;
     :deep(.logo-wrapper .logo-title) {
       color: #fff !important;
+    }
+  }
+  .light .sidebar-bg-dark {
+    background-color: #001529;
+  }
+  .dark .sidebar-bg-dark {
+    :deep(.ant-menu) {
+      background: transparent !important;
     }
   }
   .sidebar-bg-light {

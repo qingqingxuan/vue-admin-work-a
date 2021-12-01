@@ -4,7 +4,11 @@
       <SearchIcon />
     </span>
     <a-popover placement="bottom" trigger="click" :width="300">
-      <a-badge v-if="state.actionItem.showMessage" :count="badgeValue" class="badge-action-item action-item">
+      <a-badge
+        v-if="state.actionItem.showMessage"
+        :count="badgeValue"
+        class="badge-action-item action-item"
+      >
         <NotificationsIcon />
       </a-badge>
       <template #content>
@@ -21,7 +25,8 @@
       class="action-item"
       @click="onScreenFull"
     >
-      <ExpandIcon />
+      <ExpandIcon v-if="!isFullscreen" />
+      <ExitExpandIcon v-else />
     </span>
     <span class="action-item" @click="onShowSetting">
       <SettingIcon />
@@ -39,7 +44,8 @@
   import {
     SettingOutlined as SettingIcon,
     SearchOutlined as SearchIcon,
-    ExpandOutlined as ExpandIcon,
+    FullscreenOutlined as ExpandIcon,
+    FullscreenExitOutlined as ExitExpandIcon,
     BellOutlined as NotificationsIcon,
     ReloadOutlined as RefreshIcon,
   } from '@ant-design/icons-vue'
@@ -53,6 +59,7 @@
       ExpandIcon,
       NotificationsIcon,
       RefreshIcon,
+      ExitExpandIcon,
     },
     setup() {
       const searchContentRef = ref<SearchContentType>()
@@ -67,13 +74,13 @@
       function onShowSearch() {
         searchContentRef.value?.onShow()
       }
-      const { isSupported, enter } = useFullscreen(document.documentElement)
+      const { isSupported, toggle, isFullscreen } = useFullscreen(document.documentElement)
       function onScreenFull() {
         if (!isSupported) {
           message.error('当前浏览器不支持全屏操作')
           return false
         }
-        enter()
+        toggle()
       }
       function onRefrehRoute() {
         router.replace({ path: '/redirect' + route.path })
@@ -92,6 +99,7 @@
         onScreenFull,
         onRefrehRoute,
         onShowSetting,
+        isFullscreen,
       }
     },
   })

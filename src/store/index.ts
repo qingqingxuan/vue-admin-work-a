@@ -64,6 +64,10 @@ const store = {
         ;(this as any)[key] = actions[key]
       }
     }
+    if (this.state.device === DeviceType.MOBILE) {
+      this.toggleCollapse(true)
+      this.changeLayoutMode(LayoutMode.LTR)
+    }
     useChangeMenuWidth(Setting.sideWidth)
     useGray(Setting.isGray)
     this.restoreVisitedView()
@@ -167,9 +171,7 @@ const store = {
     this.state.permissionRoutes.push(...tempRoutes)
   },
   isEmptyPermissionRoute() {
-    return (
-      !this.state.permissionRoutes || this.state.permissionRoutes.length === 0
-    )
+    return !this.state.permissionRoutes || this.state.permissionRoutes.length === 0
   },
   setUserInfo(userInfo: { nickName: string; avatar: string }) {
     this.state.userInfo.nickName = userInfo ? userInfo.nickName || '' : ''

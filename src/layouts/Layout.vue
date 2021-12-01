@@ -3,12 +3,9 @@
     class="vaw-layout-container"
     :class="[state.device === 'mobile' && 'is-mobile', state.theme]"
   >
-    <transition name="header">
-      <VAWHeader v-if="isShowHeader" />
-    </transition>
-    <template v-if="isShowHeader">
-      <SideBar :show-logo="!isShowHeader" />
-      <MainLayout :show-nav-bar="!isShowHeader" />
+    <template v-if="state.layoutMode === 'ttb'">
+      <VAWHeader />
+      <MainLayout :show-nav-bar="false" />
     </template>
     <template v-else-if="state.layoutMode === 'lcr'">
       <TabSplitSideBar />
@@ -31,7 +28,7 @@
 
 <script lang="ts">
   import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
-  import { DeviceType } from '../types/store'
+  import { DeviceType, LayoutMode } from '../types/store'
   import { useLayoutStore } from './index'
   import useEmit from '@/hooks/useEmit'
   export default defineComponent({
@@ -56,9 +53,11 @@
         if (width <= 768) {
           store?.changeDevice(DeviceType.MOBILE)
           store?.toggleCollapse(true)
+          store?.changeLayoutMode(LayoutMode.LTR)
         } else if (width < 992 && width > 768) {
           store?.changeDevice(DeviceType.PAD)
           store?.toggleCollapse(true)
+          store?.changeLayoutMode(LayoutMode.LTR)
         } else if (width < 1200 && width >= 992) {
           store?.changeDevice(DeviceType.PC)
           store?.toggleCollapse(false)
