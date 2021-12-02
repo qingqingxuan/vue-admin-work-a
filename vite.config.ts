@@ -3,8 +3,16 @@ import viteSvgIcons from 'vite-plugin-svg-icons'
 import ViteComponents, { AntDesignVueResolver } from 'vite-plugin-components'
 import path from 'path'
 
+const __VERSION__INFO = {
+  name: 'Admin Work A',
+  version: '1.0.2',
+}
+
 export default ({ command, mode }) => {
   const config = {
+    define: {
+      __VERSION__INFO: JSON.stringify(__VERSION__INFO),
+    },
     plugins: [
       vue(),
       viteSvgIcons({

@@ -87,10 +87,6 @@
     .mobile-shadow {
       display: none;
     }
-    .layout-mode-ttb {
-      margin-top: @logoHeight;
-      transition: all @transitionTime;
-    }
   }
   .is-mobile {
     .mobile-shadow {
