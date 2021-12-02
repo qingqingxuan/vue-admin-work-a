@@ -21,6 +21,7 @@
     "tiny-emitter": "^2.1.0",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",
+    "vuedraggable": "^4.0.3",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

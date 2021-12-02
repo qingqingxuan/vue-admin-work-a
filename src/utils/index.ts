@@ -117,7 +117,15 @@ export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Ar
         children: null,
       }
       if (it.children) {
-        tempMenu.children = transfromMenu(it.children)
+        if (it.meta && it.meta.isSingle && it.children.length === 1) {
+          const lastItem = it.children[0] as RouteRecordRawWithHidden
+          tempMenu.key = lastItem.fullPath || tempMenu.key
+          tempMenu.label = (lastItem.meta && lastItem.meta.title ? lastItem.meta?.title : tempMenu.label) as string
+          tempMenu.icon = (lastItem.meta && lastItem.meta.icon ? lastItem.meta?.icon : tempMenu.icon) as string
+          tempMenu.children = null
+        } else {
+          tempMenu.children = transfromMenu(it.children)
+        }
       }
       tempMenus.push(tempMenu)
     })

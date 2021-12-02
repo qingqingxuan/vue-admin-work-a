@@ -1,3 +1,7 @@
+/**
+ * @deprecated
+ * please use `@vueuse/useScriptTag` function
+ */
 import { onMounted } from 'vue'
 
 export default function userCreateScript(src: string) {

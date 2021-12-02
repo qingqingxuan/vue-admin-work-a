@@ -371,6 +371,7 @@ export const adminRoutes = [
     menuName: '项目信息',
     iconPrefix: 'iconfont',
     icon: 'detail',
+    isSingle: true,
     children: [
       {
         parentPath: '/project',

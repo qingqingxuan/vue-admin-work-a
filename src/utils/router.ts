@@ -20,6 +20,7 @@ interface OriginRoute {
   iconPrefix?: string
   icon?: string
   badge?: string | number
+  isSingle?: boolean
   children: Array<OriginRoute>
 }
 
@@ -82,6 +83,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
         icon: it.icon || 'menu',
         iconPrefix: it.iconPrefix || 'iconfont',
         badge: it.badge,
+        isSingle: !!it.isSingle,
       },
     }
     if (it.children) {
