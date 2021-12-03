@@ -60,7 +60,7 @@
   })
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .exception-container {
     text-align: center;
     height: 100%;

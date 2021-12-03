@@ -196,11 +196,7 @@
     },
   })
 </script>
-<style lang="scss" scoped>
-  .el-tag--dark + .el-tag--dark {
-    margin-left: 10px;
-    margin-top: 10px;
-  }
+<style lang="less" scoped>
   .box-wrapper {
     .personal-box {
       width: 30%;

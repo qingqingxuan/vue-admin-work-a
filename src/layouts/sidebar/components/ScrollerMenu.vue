@@ -94,10 +94,13 @@
         }
       }
       function onMenuClick({ key }: any) {
-        if (isExternal(key)) return
-        router.push(key)
-        if (store.state.device === 'mobile') {
-          store.toggleCollapse(true)
+        if (isExternal(key)) {
+          window.open(key)
+        } else {
+          router.push(key)
+          if (store.state.device === 'mobile') {
+            store.toggleCollapse(true)
+          }
         }
       }
       watch(
@@ -126,6 +129,33 @@
 <style lang="less" scoped>
   :deep(.ant-menu.ant-menu-inline-collapsed) {
     width: 65px !important;
+  }
+  :deep(.ant-menu-horizontal) {
+    border-bottom: none !important;
+  }
+  :deep(.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active:after) {
+    border-bottom: 3px solid #1890ff !important;
+  }
+  :deep(.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover:after) {
+    border-bottom: 3px solid #1890ff !important;
+  }
+  :deep(.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover:after) {
+    border-bottom: 3px solid #1890ff !important;
+  }
+  :deep(.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active:after) {
+    border-bottom: 3px solid #1890ff !important;
+  }
+  :deep(.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected:after) {
+    border-bottom: 3px solid #1890ff !important;
+  }
+  :deep(.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open:after) {
+    border-bottom: 3px solid #1890ff !important;
+  }
+  :deep(.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected:after) {
+    border-bottom: 3px solid #1890ff !important;
+  }
+  :deep(.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover:after) {
+    border-bottom: 3px solid #1890ff !important;
   }
   .scrollbar {
     height: calc(100vh - @logoHeight) !important;

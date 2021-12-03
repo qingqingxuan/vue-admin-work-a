@@ -3,7 +3,6 @@
     <a-card size="small">
       <div class="text-lg">
         <span> 当前版本号：{{ version }} </span>
-        <span class="ml-4">最后编译时间：{{ lastBuildTime }}</span>
       </div>
     </a-card>
     <a-card :body-style="{ padding: '10px' }">
@@ -32,7 +31,7 @@
   import useAppInfo from '@/hooks/useAppInfo'
   import { onMounted, reactive, ref } from 'vue'
   const { version, dependencies, devDependencies } = useAppInfo()
-  const { lastBuildTime } = __VERSION__INFO
+  // const { lastBuildTime } = __VERSION__INFO
   const showContact = ref(false)
   const state = useLayoutStore().state
   const dependenciesList = reactive<Record<string, string>[]>([])

@@ -9,7 +9,7 @@
         :class="{ 'arrow-wrapper__disabled': leftArrowDisabled }"
         @click="leftArrowClick"
       >
-        <LeftOutlined />
+        <CaretLeftOutlined />
       </span>
       <a-tabs class="flex-1">
         <template #renderTabBar>
@@ -41,7 +41,7 @@
         style="transform: rotate(180deg)"
         @click="rightArrowClick"
       >
-        <LeftOutlined />
+        <CaretLeftOutlined />
       </span>
     </div>
     <ul v-show="showContextMenu" class="contex-menu-wrapper" :style="contextMenuStyle">
