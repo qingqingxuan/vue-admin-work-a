@@ -11,7 +11,7 @@
         <CaretDownOutlined class="tip" />
       </div>
       <template #overlay>
-        <a-menu>
+        <a-menu @click="handleSelect">
           <a-menu-item v-for="item of options" :key="item.key">
             <template #icon>
               <component :is="item.icon" />
@@ -51,7 +51,7 @@
         ;(store as any).onPersonalCenter && (store as any).onPersonalCenter()
       }
       function logout() {
-        Modal.warning({
+        Modal.confirm({
           title: '提示',
           content: '是否要退出当前账号？',
           okText: '退出',
@@ -61,7 +61,7 @@
           },
         })
       }
-      function handleSelect(key: string) {
+      function handleSelect({ key }: any) {
         switch (key) {
           case 'personal-center':
             personalCenter()

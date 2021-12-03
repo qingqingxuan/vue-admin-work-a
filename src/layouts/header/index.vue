@@ -61,9 +61,10 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-    }
-    .avatar-wrapper {
-      padding-right: 15px;
+      .avatar-wrapper {
+        padding-right: 15px;
+        margin-left: 10px;
+      }
     }
   }
 </style>

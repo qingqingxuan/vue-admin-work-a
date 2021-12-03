@@ -2,10 +2,11 @@ import vue from '@vitejs/plugin-vue'
 import viteSvgIcons from 'vite-plugin-svg-icons'
 import ViteComponents, { AntDesignVueResolver } from 'vite-plugin-components'
 import path from 'path'
+import dayjs from 'dayjs'
 
 const __VERSION__INFO = {
   name: 'Admin Work A',
-  version: '1.0.2',
+  lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
 }
 
 export default ({ command, mode }) => {

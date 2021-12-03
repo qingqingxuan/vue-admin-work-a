@@ -90,7 +90,7 @@
   })
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   ul {
     list-style: none;
     padding: 0;

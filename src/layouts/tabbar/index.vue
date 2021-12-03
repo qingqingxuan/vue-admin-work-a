@@ -140,16 +140,14 @@
           this.currentTab = ''
           return
         }
-        if (newVal.name) {
-          store.addVisitedView(newVal).then((route) => {
-            this.currentTab = route.fullPath || ''
-            const scrollbar = this.$refs.scrollbar as HTMLDivElement
-            scrollbar.scrollTo({
-              left: 1000000000,
-              behavior: 'smooth',
-            })
+        store.addVisitedView(newVal).then((route) => {
+          this.currentTab = route.fullPath || ''
+          const scrollbar = this.$refs.scrollbar as HTMLDivElement
+          scrollbar.scrollTo({
+            left: 1000000000,
+            behavior: 'smooth',
           })
-        }
+        })
       },
       showContextMenu(val) {
         if (val) {
@@ -426,6 +424,10 @@
         transition: all 0.2s ease-in-out;
         display: inline-flex;
         overflow: hidden;
+        :deep(.anticon) {
+          transform: scale(0.7);
+          font-weight: 500;
+        }
       }
       &:hover {
         .icon-item {

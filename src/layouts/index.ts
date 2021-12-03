@@ -5,7 +5,7 @@ import { StoreType } from '../types/store'
 import { TinyEmitter } from 'tiny-emitter'
 
 import { toHump } from '../utils'
-import { tsBigIntKeyword } from '@babel/types'
+import * as Icons from '@ant-design/icons-vue'
 
 function getComponentName(key: string) {
   if (!key) {
@@ -26,6 +26,9 @@ export function registerComponents(app: App) {
   Object.keys({ ...components, ...componentsTsx }).forEach((it: string) => {
     const component = components[it]
     app.component(component.default.name || toHump(getComponentName(it)), component.default)
+  })
+  Object.keys(Icons).forEach((it) => {
+    app.component(it, (Icons as any)[it])
   })
 }
 

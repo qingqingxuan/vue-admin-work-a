@@ -1,29 +1,20 @@
 <template>
-  <a-space direction="vertical">
+  <a-space direction="vertical w-full">
     <a-card size="small">
       <div class="text-lg">
-        当前版本号：{{ version }}
+        <span> 当前版本号：{{ version }} </span>
+        <span class="ml-4">最后编译时间：{{ lastBuildTime }}</span>
       </div>
     </a-card>
-    <a-card title="构建依赖">
-      <a-descriptions
-        label-placement="top"
-        bordered
-        :column="4"
-        :label-style="{ 'font-weight': 'bold', 'font-size': '16px' }"
-      >
+    <a-card :body-style="{ padding: '10px' }">
+      <a-descriptions label-placement="top" bordered :column="3" title="构建依赖">
         <a-descriptions-item :label="item.label" v-for="item of dependenciesList" :key="item.label">
           {{ item.value }}
         </a-descriptions-item>
       </a-descriptions>
     </a-card>
-    <a-card title="开发依赖">
-      <a-descriptions
-        label-placement="top"
-        bordered
-        :column="4"
-        :label-style="{ 'font-weight': 'bold', 'font-size': '16px' }"
-      >
+    <a-card :body-style="{ padding: '10px' }">
+      <a-descriptions label-placement="top" bordered :column="3" title="开发依赖">
         <a-descriptions-item
           :label="item.label"
           v-for="item of devDependenciesList"
@@ -41,6 +32,7 @@
   import useAppInfo from '@/hooks/useAppInfo'
   import { onMounted, reactive, ref } from 'vue'
   const { version, dependencies, devDependencies } = useAppInfo()
+  const { lastBuildTime } = __VERSION__INFO
   const showContact = ref(false)
   const state = useLayoutStore().state
   const dependenciesList = reactive<Record<string, string>[]>([])

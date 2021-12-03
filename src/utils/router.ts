@@ -80,8 +80,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
         title: it.menuName,
         affix: !!it.affix,
         cacheable: !!it.cacheable,
-        icon: it.icon || 'menu',
-        iconPrefix: it.iconPrefix || 'iconfont',
+        icon: it.icon || 'MenuOutlined',
         badge: it.badge,
         isSingle: !!it.isSingle,
       },
@@ -97,7 +96,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
 const whiteRoutes: string[] = ['/login']
 
 function isTokenExpired(): boolean {
-  const token = Cookies.get('p-admin-token')
+  const token = Cookies.get('a-admin-token')
   return !!token
 }
 router.beforeEach(async (to) => {

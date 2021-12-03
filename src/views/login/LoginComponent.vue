@@ -162,7 +162,7 @@
   })
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   .login-container {
     position: relative;
     overflow: hidden;

@@ -12,7 +12,7 @@
         <template v-if="!item.children">
           <a-menu-item :key="item.key">
             <template #icon>
-              <PieChartOutlined />
+              <component :is="item.icon || 'MenuOutlined'" />
             </template>
             {{ item.label }}
           </a-menu-item>
@@ -40,11 +40,9 @@
   import { useLayoutStore } from '../../index'
   import { RouteRecordRawWithHidden } from '../../../types/store'
   import { isExternal, transfromMenu } from '../../../utils'
-  import { PieChartOutlined } from '@ant-design/icons-vue'
 
   export default defineComponent({
     name: 'ScrollerMenu',
-    components: { PieChartOutlined },
     props: {
       routes: {
         type: Object as PropType<Array<RouteRecordRawWithHidden>>,
@@ -127,7 +125,7 @@
 
 <style lang="less" scoped>
   :deep(.ant-menu.ant-menu-inline-collapsed) {
-    width: 65px;
+    width: 65px !important;
   }
   .scrollbar {
     height: calc(100vh - @logoHeight) !important;

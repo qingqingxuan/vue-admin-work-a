@@ -11,6 +11,7 @@
     "@vueuse/core": "^7.1.2",
     "ant-design-vue": "^3.0.0-alpha.12",
     "axios": "^0.24.0",
+    "dayjs": "^1.10.7",
     "echarts": "^5.1.2",
     "js-cookie": "^3.0.1",
     "mockjs": "^1.1.0",

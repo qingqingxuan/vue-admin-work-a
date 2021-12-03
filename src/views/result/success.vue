@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
-    <a-card :content-style="{ padding: 0 }" class="container">
-      <div class="text-center">
+    <a-card :content-style="{ padding: 0 }">
+      <div class="text-center p-4">
         <CheckCircleOutlined :style="{ color: '#0e7a0d', fontSize: '60px' }" />
       </div>
       <div class="result mt-1"> 提交成功 </div>
@@ -31,26 +31,23 @@
   })
 </script>
 
-<style lang="scss" scoped>
-  .container {
-    padding: 50px;
-    .icon {
-      color: #67c23a;
-      font-size: 100px;
-      margin: 30px 0;
-    }
-    .result {
-      font-size: 24px;
-      line-height: 1.8;
-      text-align: center;
-    }
-    .tip {
-      font-size: 14px;
-      line-height: 1.6;
-      text-align: center;
-    }
-    .action {
-      margin-top: 30px;
-    }
+<style lang="less" scoped>
+  .icon {
+    color: #67c23a;
+    font-size: 100px;
+    margin: 30px 0;
+  }
+  .result {
+    font-size: 24px;
+    line-height: 1.8;
+    text-align: center;
+  }
+  .tip {
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+  }
+  .action {
+    margin-top: 30px;
   }
 </style>

@@ -6,7 +6,7 @@
       <template v-if="!item.children">
         <a-menu-item :key="item.key">
           <template #icon>
-            <PieChartOutlined />
+            <component :is="item.icon" />
           </template>
           {{ item.label }}
         </a-menu-item>
@@ -20,11 +20,9 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import { MailOutlined, PieChartOutlined } from '@ant-design/icons-vue'
 
   export default defineComponent({
     name: 'SubMenu',
-    components: { MailOutlined, PieChartOutlined },
     props: {
       menuInfo: {
         type: Object,

@@ -15,38 +15,20 @@ export const constantRoutes = [
     redirect: '/index/home',
     hidden: true,
   },
-  // {
-  //   path: '/redirect',
-  //   component: Layout,
-  //   hidden: true,
-  //   meta: {
-  //     noShowTabbar: true,
-  //   },
-  //   children: [
-  //     {
-  //       path: '/redirect/:path(.*)*',
-  //       component: (): any => import('@/views/redirect/index.vue'),
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: '/personal',
-  //   name: 'personal',
-  //   component: Layout,
-  //   hidden: true,
-  //   meta: {
-  //     title: '个人中心',
-  //   },
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: () => import('@/views/personal/index.vue'),
-  //       meta: {
-  //         title: '个人中心',
-  //       },
-  //     },
-  //   ],
-  // },
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    meta: {
+      noShowTabbar: true,
+    },
+    children: [
+      {
+        path: '/redirect/:path(.*)*',
+        component: (): any => import('@/views/redirect/index.vue'),
+      },
+    ],
+  },
   {
     path: '/index',
     component: Layout,
@@ -66,7 +48,7 @@ export const constantRoutes = [
           affix: true,
           cacheable: true,
           iconPrefix: 'iconfont',
-          icon: 'menu',
+          icon: 'MenuOutlined',
         },
       },
       {
@@ -76,29 +58,47 @@ export const constantRoutes = [
         meta: {
           title: '工作台',
           iconPrefix: 'iconfont',
-          icon: 'menu',
+          icon: 'MenuOutlined',
         },
       },
     ],
   },
-  // {
-  //   path: '/404',
-  //   name: '404',
-  //   hidden: true,
-  //   component: () => import('@/views/exception/404.vue'),
-  // },
-  // {
-  //   path: '/500',
-  //   name: '500',
-  //   hidden: true,
-  //   component: () => import('@/views/exception/500.vue'),
-  // },
-  // {
-  //   path: '/403',
-  //   name: '403',
-  //   hidden: true,
-  //   component: () => import('@/views/exception/403.vue'),
-  // },
+  {
+    path: '/personal',
+    name: 'personal',
+    component: Layout,
+    meta: {
+      title: '个人中心',
+      isSingle: true,
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/personal/index.vue'),
+        meta: {
+          title: '个人中心',
+        },
+      },
+    ],
+  },
+  {
+    path: '/404',
+    name: '404',
+    hidden: true,
+    component: () => import('@/views/exception/404.vue'),
+  },
+  {
+    path: '/500',
+    name: '500',
+    hidden: true,
+    component: () => import('@/views/exception/500.vue'),
+  },
+  {
+    path: '/403',
+    name: '403',
+    hidden: true,
+    component: () => import('@/views/exception/403.vue'),
+  },
 ]
 const router = createRouter({
   history: createWebHashHistory(),
