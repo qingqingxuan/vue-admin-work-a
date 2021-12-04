@@ -35,7 +35,7 @@ export interface FormItem extends TableSearchItem {
   required?: boolean
   validator?: (value: FormItem, message: MessageApi) => boolean
   hidden?: boolean
-  inputType?: string
+  type?: string
   maxLength?: number
   rows?: number
   disabled?: Ref<boolean> | boolean
@@ -63,7 +63,7 @@ export type ModalDialogType = InstanceType<
   typeof import('../components/common/ModalDialog.vue').default
 >
 
-// export type DataFormType = InstanceType<typeof import('../components/common/DataForm').default>
+export type DataFormType = InstanceType<typeof import('../components/DataForm.vue').default>
 
 export type TableHeaderType = InstanceType<
   typeof import('../components/common/TableHeader.vue').default

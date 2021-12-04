@@ -2,7 +2,7 @@
   <div class="main-container">
     <a-card
       title="工作台"
-      :bodyStyle="{ padding: '10px' }"
+      :bodyStyle="{ padding: '20px' }"
       :headStyle="{ padding: '0 10px' }"
       size="small"
     >
@@ -38,11 +38,11 @@
         </a-col>
       </a-row>
     </a-card>
-    <a-row class="mt-1" gutter="10">
+    <a-row class="mt-1" :gutter="10">
       <a-col :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
         <div>
           <a-card
-            :bodyStyle="{ padding: '10px' }"
+            :bodyStyle="{ padding: '20px' }"
             :headStyle="{ padding: '0 10px' }"
             size="small"
             hoverable
@@ -60,7 +60,7 @@
           <a-card
             :style="{ marginTop: '10px' }"
             title="快捷操作"
-            :bodyStyle="{ padding: '10px' }"
+            :bodyStyle="{ padding: '20px' }"
             :headStyle="{ padding: '0 10px' }"
             size="small"
             hoverable

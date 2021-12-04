@@ -26,10 +26,9 @@
         </a-table>
       </template>
     </TableBody>
-    <ModalDialog ref="modalDialog" @confirm="onDataFormConfirm">
+    <ModalDialog ref="modalDialog" title="添加部门" @confirm="onDataFormConfirm">
       <template #content>
-        <!-- <DataForm ref="itemDataFormRef" :options="itemFormOptions" /> -->
-        <div style="height: 10vh">asdfasd</div>
+        <DataForm ref="itemDataFormRef" :options="itemFormOptions" />
       </template>
     </ModalDialog>
   </div>
@@ -37,12 +36,13 @@
 
 <script lang="ts">
   import { getDepartmentList } from '@/api/url'
-  import { TableActionModel, useTable, useTableColumn } from '@/hooks/table'
-  import { defineComponent, h, nextTick, onMounted, Ref, ref, shallowReactive } from 'vue'
+  import { useTable, useTableColumn } from '@/hooks/table'
+  import { defineComponent, h, onMounted, ref } from 'vue'
   import _ from 'lodash'
   import usePost from '@/hooks/usePost'
-  import { message } from 'ant-design-vue'
-  import type { ModalDialogType } from '@/types/components'
+  import { Input, message } from 'ant-design-vue'
+  import type { DataFormType, FormItem, ModalDialogType } from '@/types/components'
+  import type { SelectProps } from 'ant-design-vue'
   interface Department {
     parentId: number
     id: number
@@ -53,79 +53,33 @@
     children: Array<Department>
   }
   const DP_CODE_FLAG = 'dp_code_'
-  // const itemFormOptions = [
-  //   {
-  //     key: 'parentId',
-  //     label: '父级部门',
-  //     value: ref(null),
-  //     optionItems: shallowReactive([] as Array<SelectOption>),
-  //     render: (formItem) => {
-  //       return h(NSelect, {
-  //         value: formItem.value.value,
-  //         onUpdateValue: (val) => {
-  //           formItem.value.value = val
-  //         },
-  //         placeholder: '请选择父级部门',
-  //         options: formItem.optionItems as Array<SelectOption>,
-  //       })
-  //     },
-  //   },
-  //   {
-  //     key: 'name',
-  //     label: '部门名称',
-  //     type: 'input',
-  //     value: ref(null),
-  //     render: (formItem) => {
-  //       return h(NInput, {
-  //         value: formItem.value.value,
-  //         onUpdateValue: (newVal) => {
-  //           formItem.value.value = newVal
-  //         },
-  //         maxlength: 50,
-  //         placeholder: '请输入部门名称',
-  //       })
-  //     },
-  //     validator: (formItem, message) => {
-  //       if (!formItem.value.value) {
-  //         message.error('请输入部门名称')
-  //         return false
-  //       }
-  //       return true
-  //     },
-  //   },
-  //   {
-  //     label: '部门编号',
-  //     key: 'depCode',
-  //     value: ref(null),
-  //     render: (formItem) => {
-  //       return h(
-  //         NInput,
-  //         {
-  //           value: formItem.value.value,
-  //           onUpdateValue: (val) => {
-  //             formItem.value.value = val
-  //           },
-  //           placeholder: '请输入部门编号',
-  //         },
-  //         {
-  //           prefix: () => DP_CODE_FLAG,
-  //         }
-  //       )
-  //     },
-  //     validator: (formItem, message) => {
-  //       if (!formItem.value.value) {
-  //         message.error('请输入部门编号')
-  //         return false
-  //       }
-  //       return true
-  //     },
-  //   },
-  // ] as Array<FormItem>
+  const itemFormOptions = [
+    {
+      key: 'name',
+      label: '部门名称',
+      type: 'input',
+      value: ref(''),
+      validator: (formItem, message) => {
+        if (!formItem.value.value) {
+          message.error('请输入部门名称')
+          return false
+        }
+        return true
+      },
+      render: (formItem: FormItem) => {
+        return h(Input, {
+          value: formItem.value.value,
+          'onUpdate:value': (e) => {
+            formItem.value.value = e
+          },
+        })
+      },
+    },
+  ] as Array<FormItem>
   export default defineComponent({
     name: 'Department',
     setup() {
       const table = useTable()
-      // const naiveDailog = useDialog()
       const tableColumns = useTableColumn([
         {
           title: '部门名称',
@@ -158,8 +112,7 @@
           align: 'center',
         },
       ])
-      // const itemDataFormRef = ref<DataFormType | null>(null)
-      // const searchDataFormRef = ref<DataFormType | null>(null)
+      const itemDataFormRef = ref<DataFormType | null>(null)
       const modalDialog = ref<ModalDialogType | null>(null)
       const post = usePost()
       function doRefresh() {
@@ -252,15 +205,14 @@
       }
       onMounted(doRefresh)
       return {
-        // itemDataFormRef,
-        // searchDataFormRef,
+        itemDataFormRef,
         onDataFormConfirm,
         tableColumns,
         onUpdateItem,
         ...table,
         onDeleteItem,
         onAddItem,
-        // itemFormOptions,
+        itemFormOptions,
         rowKey,
         modalDialog,
       }

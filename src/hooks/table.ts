@@ -3,13 +3,6 @@ import { h, reactive, Ref, ref, shallowReactive, VNode } from 'vue'
 import { TableFooterType, TableHeaderType } from '@/types/components'
 import { TableColumnType } from 'ant-design-vue'
 
-export interface TableActionModel {
-  label: string
-  type: 'default' | 'warning' | 'primary' | 'success' | 'error' | 'info'
-  disabled: boolean
-  onClick: () => {}
-}
-
 interface Table {
   dataList: Array<any>
   bordered: Ref<Boolean>

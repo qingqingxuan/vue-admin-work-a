@@ -12,6 +12,10 @@ import LoadingComponent from '@/layouts/loading/index.vue'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
+NProgress.configure({
+  showSpinner: false,
+})
+
 interface OriginRoute {
   menuUrl: string
   menuName?: string
