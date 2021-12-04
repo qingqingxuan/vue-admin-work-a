@@ -77,6 +77,7 @@ export const constantRoutes = [
         component: () => import('@/views/personal/index.vue'),
         meta: {
           title: '个人中心',
+          icon: 'UserOutlined',
         },
       },
     ],

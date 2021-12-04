@@ -9,6 +9,8 @@ import { Layout } from '@/layouts'
 import layoutStore from '@/store'
 import { defineAsyncComponent } from 'vue'
 import LoadingComponent from '@/layouts/loading/index.vue'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 interface OriginRoute {
   menuUrl: string
@@ -100,6 +102,7 @@ function isTokenExpired(): boolean {
   return !!token
 }
 router.beforeEach(async (to) => {
+  NProgress.start()
   if (whiteRoutes.includes(to.path)) {
     return true
   } else {
@@ -131,4 +134,8 @@ router.beforeEach(async (to) => {
       }
     }
   }
+})
+
+router.afterEach(() => {
+  NProgress.done()
 })

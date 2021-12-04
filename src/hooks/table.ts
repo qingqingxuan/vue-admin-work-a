@@ -1,7 +1,7 @@
 import { h, reactive, Ref, ref, shallowReactive, VNode } from 'vue'
 
-import { DataTableColumn, NButton } from 'naive-ui'
 import { TableFooterType, TableHeaderType } from '@/types/components'
+import { TableColumnType } from 'ant-design-vue'
 
 export interface TableActionModel {
   label: string
@@ -20,7 +20,7 @@ interface Table {
   tableHeight: Ref<number>
   handleSuccess: (res: any) => Promise<any>
   handleSelectionChange: (tempSelectRows: Array<any>) => void
-  useTableColumn: (columns: DataTableColumn[], options: DataTableColumn) => Array<any>
+  useTableColumn: (columns: TableColumnType[], options: TableColumnType) => Array<any>
   selectionColumn: { type: 'selection' }
   indexColumn: {
     title: string
@@ -88,31 +88,13 @@ export const useTable = function (): Table {
   }
 }
 
-export const useRenderAction = function (actions: TableActionModel[]) {
-  const renderActions = actions.map((it) => {
-    return h(
-      NButton,
-      {
-        type: it.type || 'primary',
-        size: 'small',
-        disabled: it.disabled,
-        onClick: it.onClick,
-      },
-      {
-        default: () => it.label,
-      }
-    )
-  })
-  return renderActions
-}
-
 export const useRowKey = function (propName: string) {
   return function (rowData: any) {
     return rowData[propName]
   }
 }
 
-export const useTableColumn = function (columns: DataTableColumn[], options: DataTableColumn) {
+export const useTableColumn = function (columns: TableColumnType[], options: TableColumnType = {}) {
   return columns.map((it) => Object.assign(it, options))
 }
 
