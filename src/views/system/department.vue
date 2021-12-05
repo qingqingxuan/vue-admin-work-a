@@ -28,7 +28,31 @@
     </TableBody>
     <ModalDialog ref="modalDialog" title="添加部门" @confirm="onDataFormConfirm">
       <template #content>
-        <DataForm ref="itemDataFormRef" :options="itemFormOptions" />
+        <a-form :model="departmentModel" :labelCol="{ span: 4 }" :rules="formRule">
+          <a-form-item label="上级部门" name="parentId">
+            <a-select v-model:value="departmentModel.parentId" placeholder="请选择上级部门">
+              <a-select-option
+                v-for="item of departmentModel.children"
+                :key="item.id"
+                :value="item.depCode"
+                >{{ item.name }}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item label="部门编号" name="depCode">
+            <a-input placeholder="请输入部门编号" v-model:value="departmentModel.depCode">
+            </a-input>
+          </a-form-item>
+          <a-form-item label="排序" name="order">
+            <a-input-number v-model:value="departmentModel.order" />
+          </a-form-item>
+          <a-form-item label="状态" name="status">
+            <a-radio-group v-model:value="departmentModel.status">
+              <a-radio :value="1">正常</a-radio>
+              <a-radio :value="0">禁用</a-radio>
+            </a-radio-group>
+          </a-form-item>
+        </a-form>
       </template>
     </ModalDialog>
   </div>
@@ -37,12 +61,11 @@
 <script lang="ts">
   import { getDepartmentList } from '@/api/url'
   import { useTable, useTableColumn } from '@/hooks/table'
-  import { defineComponent, h, onMounted, ref } from 'vue'
+  import { defineComponent, onMounted, reactive, ref } from 'vue'
   import _ from 'lodash'
   import usePost from '@/hooks/usePost'
-  import { Input, message } from 'ant-design-vue'
-  import type { DataFormType, FormItem, ModalDialogType } from '@/types/components'
-  import type { SelectProps } from 'ant-design-vue'
+  import { message } from 'ant-design-vue'
+  import type { DataFormType, ModalDialogType } from '@/types/components'
   interface Department {
     parentId: number
     id: number
@@ -53,29 +76,6 @@
     children: Array<Department>
   }
   const DP_CODE_FLAG = 'dp_code_'
-  const itemFormOptions = [
-    {
-      key: 'name',
-      label: '部门名称',
-      type: 'input',
-      value: ref(''),
-      validator: (formItem, message) => {
-        if (!formItem.value.value) {
-          message.error('请输入部门名称')
-          return false
-        }
-        return true
-      },
-      render: (formItem: FormItem) => {
-        return h(Input, {
-          value: formItem.value.value,
-          'onUpdate:value': (e) => {
-            formItem.value.value = e
-          },
-        })
-      },
-    },
-  ] as Array<FormItem>
   export default defineComponent({
     name: 'Department',
     setup() {
@@ -112,6 +112,21 @@
           align: 'center',
         },
       ])
+      const departmentModel = reactive({
+        parentId: undefined,
+        id: '',
+        name: '',
+        depCode: '',
+        order: 1,
+        status: 1,
+        children: [],
+      })
+      const formRule = {
+        depCode: [
+          { required: true, message: '请输入部门编号', trigger: 'blur' },
+          { min: 3, max: 10, message: '长度在 3 - 10个字符', trigger: 'blur' },
+        ],
+      }
       const itemDataFormRef = ref<DataFormType | null>(null)
       const modalDialog = ref<ModalDialogType | null>(null)
       const post = usePost()
@@ -206,14 +221,14 @@
       onMounted(doRefresh)
       return {
         itemDataFormRef,
-        onDataFormConfirm,
+        departmentModel,
+        formRule,
+        ...table,
         tableColumns,
         onUpdateItem,
-        ...table,
+        onDataFormConfirm,
         onDeleteItem,
         onAddItem,
-        itemFormOptions,
-        rowKey,
         modalDialog,
       }
     },

@@ -1,42 +1,48 @@
-import {
-  CheckboxGroupProps,
-  CheckboxProps,
-  DatePickerProps,
-  InputProps,
-  NButton,
-  NCheckbox,
-  NCheckboxGroup,
-  NDatePicker,
-  NInput,
-  NPopselect,
-  NRadioButton,
-  NRadioGroup,
-  NSelect,
-  NSpace,
-  NSwitch,
-  NTimePicker,
-  NTreeSelect,
-  PopselectProps,
-  RadioButtonProps,
-  RadioGroupProps,
-  SelectOption,
-  SelectProps,
-  SwitchProps,
-  TimePickerProps,
-  TreeSelectProps,
-} from 'naive-ui'
-import { Value as DatePickerValue } from 'naive-ui/lib/date-picker/src/interface'
-import { SelectGroupOption, Value as SelectValue } from 'naive-ui/lib/select/src/interface'
-import { TreeSelectOption, Value } from 'naive-ui/lib/tree-select/src/interface'
+import { Input } from 'ant-design-vue'
+import InputProps from 'ant-design-vue/lib/input/inputProps'
 import { AllowedComponentProps, createVNode, h, Ref } from 'vue'
 
-export function renderInput(value: Ref<string>, options: InputProps | AllowedComponentProps = {}) {
-  return h(NInput, {
+export function renderInput(
+  value: Ref<string>,
+  options:
+    | {
+        id?: unknown
+        prefixCls?: unknown
+        inputPrefixCls?: unknown
+        defaultValue?: unknown
+        value?: unknown
+        placeholder?: unknown
+        type?: unknown
+        name?: unknown
+        size?: unknown
+        disabled?: unknown
+        readonly?: unknown
+        addonBefore?: unknown
+        addonAfter?: unknown
+        prefix?: unknown
+        suffix?: unknown
+        autofocus?: unknown
+        allowClear?: unknown
+        lazy?: unknown
+        maxlength?: unknown
+        loading?: unknown
+        onPressEnter?: unknown
+        onKeydown?: unknown
+        onKeyup?: unknown
+        onFocus?: unknown
+        onBlur?: unknown
+        onChange?: unknown
+        onInput?: unknown
+        'onUpdate:value'?: unknown
+      }
+    | AllowedComponentProps = {}
+) {
+  return h(Input, {
+    ...options,
     value: value.value,
-    onUpdateValue: (newVal: string) => {
+    'onUpdate:value': (newVal: string) => {
       value.value = newVal
     },
-    ...options,
   })
 }
 
