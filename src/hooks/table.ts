@@ -1,25 +1,25 @@
-import { h, reactive, Ref, ref, shallowReactive, VNode } from 'vue'
+import { reactive, Ref, ref, shallowReactive } from 'vue'
 
 import { TableFooterType, TableHeaderType } from '@/types/components'
 import { TableColumnType } from 'ant-design-vue'
+import { TableRowSelection } from 'ant-design-vue/lib/table/interface'
 
 interface Table {
   dataList: Array<any>
   bordered: Ref<Boolean>
-  selectRows: Array<string | number>
+  selectRows: Ref<Array<RowSelectKey>>
   tableLoading: Ref<boolean>
   tableHeaderRef: Ref<TableHeaderType | null>
   tableFooterRef: Ref<TableFooterType | null>
   tableHeight: Ref<number>
   handleSuccess: (res: any) => Promise<any>
-  handleSelectionChange: (tempSelectRows: Array<any>) => void
   useTableColumn: (columns: TableColumnType[], options: TableColumnType) => Array<any>
+  onSelectChange: (selectedRowKeys: RowSelectKey[]) => void
   selectionColumn: { type: 'selection' }
   indexColumn: {
     title: string
     key: string
     width: number
-    render: (rowData: any, rowIndex: number) => VNode
   }
 }
 
@@ -30,7 +30,6 @@ export const useTableHeight = async function (currentIns: any): Promise<number> 
         document.querySelector('.main-section')?.getBoundingClientRect().height || 0
       const tableHeaderHeight =
         document.querySelector('.ant-table-header')?.getBoundingClientRect().height || 0
-      console.log(tableHeaderHeight)
       if (currentIns) {
         let tempHeight = tableHeaderHeight
         if (currentIns.refs.tableHeaderRef) {
@@ -40,7 +39,6 @@ export const useTableHeight = async function (currentIns: any): Promise<number> 
         if (currentIns.refs.tableFooterRef) {
           tempHeight += 45
         }
-        console.log(clientHeight, tempHeight)
         resolve(clientHeight - tempHeight)
       }
       resolve(150)
@@ -50,7 +48,7 @@ export const useTableHeight = async function (currentIns: any): Promise<number> 
 
 export const useTable = function (): Table {
   const dataList = shallowReactive([]) as Array<any>
-  let selectRows = shallowReactive([]) as Array<any>
+  const selectRows = ref([] as Array<RowSelectKey>)
   const tableHeaderRef = ref<TableHeaderType | null>(null)
   const tableFooterRef = ref<TableFooterType | null>(null)
   const tableHeight = ref(200)
@@ -62,8 +60,9 @@ export const useTable = function (): Table {
     dataList.push(...data)
     return Promise.resolve(data)
   }
-  const handleSelectionChange = (tempSelectRows: Array<any>) => {
-    selectRows = tempSelectRows
+  const onSelectChange = (tempSelectRows: Array<RowSelectKey>) => {
+    selectRows.value = tempSelectRows
+    console.log(selectRows.value)
   }
   return {
     dataList,
@@ -74,7 +73,7 @@ export const useTable = function (): Table {
     selectRows,
     tableLoading,
     handleSuccess,
-    handleSelectionChange,
+    onSelectChange,
     useTableColumn,
     selectionColumn: {
       type: 'selection',
@@ -89,6 +88,24 @@ export const useRowKey = function (propName: string) {
   }
 }
 
+type RowSelectKey = string | number
+
+export const useRowSelection = function (
+  selectedRowKeys: Array<RowSelectKey> = [],
+  onChange: (selectedRowKeys: RowSelectKey[]) => void,
+  options: TableRowSelection = {}
+) {
+  return reactive(
+    Object.assign(
+      {
+        selectedRowKeys,
+        onChange,
+      } as TableRowSelection,
+      options
+    )
+  )
+}
+
 export const useTableColumn = function (columns: TableColumnType[], options: TableColumnType = {}) {
   return columns.map((it) => Object.assign(it, options))
 }
@@ -98,9 +115,6 @@ export const useTableIndexColumn = function () {
     title: '序号',
     key: 'index',
     width: 80,
-    render: (rowData: any, rowIndex: number) => {
-      return h('div', null, { default: () => rowIndex + 1 })
-    },
   }
 }
 
@@ -108,19 +122,15 @@ export const usePagination = function (callback: () => void) {
   function onChange() {
     callback()
   }
-  function onPageSizeChange() {
-    callback()
-  }
   const paginationInfo = reactive({
     page: 1,
     pageSize: 10,
     showSizePicker: true,
     pageCount: 1,
-    pageSizes: [10, 20, 30, 40],
+    pageSizes: ['10', '20', '30', '40'],
     onChange,
-    onPageSizeChange,
     setTotalSize(totalSize: number) {
-      paginationInfo.pageCount = Math.ceil(totalSize / paginationInfo.pageSize)
+      paginationInfo.pageCount = totalSize
     },
   })
   return paginationInfo

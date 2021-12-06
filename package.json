@@ -9,7 +9,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
     "@vueuse/core": "^7.1.2",
-    "ant-design-vue": "^3.0.0-alpha.12",
+    "ant-design-vue": "^3.0.0-alpha.14",
     "axios": "^0.24.0",
     "dayjs": "^1.10.7",
     "echarts": "^5.1.2",
@@ -18,8 +18,6 @@
     "nprogress": "^0.2.0",
     "path-browserify": "^1.0.1",
     "qs": "^6.10.1",
-    "sass": "^1.43.5",
-    "sass-loader": "^12.3.0",
     "tiny-emitter": "^2.1.0",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",

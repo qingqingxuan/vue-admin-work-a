@@ -1,27 +1,12 @@
 <template>
   <a-row :gutter="10">
     <a-col :span="5">
-      <a-card
-        class="h-full"
-        :content-style="{ padding: '5px' }"
-        :header-style="{ padding: '5px' }"
-        :segmented="true"
-      >
-        <template #header>
-          <div class="flex items-center">
-            <n-input class="mr-2" v-model:value="pattern" placeholder="搜索" size="small" />
-            <n-switch size="small" v-model:value="expandAllFlag" />
-          </div>
-        </template>
-        <n-tree
-          :expanded-keys="getExpandedKeys"
-          block-line
-          :pattern="pattern"
-          :data="departmentData"
-          selectable
-          :on-update:expanded-keys="onUpdateExpandedKeys"
-          :on-update:selected-keys="onCheckedKeys"
-        />
+      <a-card class="h-full" :bodyStyle="{ padding: '5px' }" :headerStyle="{ padding: '5px' }">
+        <a-space>
+          <a-input class="mr-2" placeholder="搜索" size="small" />
+          <a-switch size="small" v-model:checked="expandAllFlag" />
+        </a-space>
+        <a-tree v-model:expandedKeys="getExpandedKeys" :tree-data="departmentData" checkable />
       </a-card>
     </a-col>
     <a-col :span="19">
@@ -34,21 +19,24 @@
         <TableBody>
           <template #default>
             <a-table
+              :row-selection="rowSelectionObj"
               :loading="tableLoading"
               :data-source="dataList"
               :columns="tableColumns"
               :pagination="false"
               tableLayout="fixed"
+              :rowKey="rowKey"
               :scroll="{ y: tableHeight, x: 'max-content' }"
             >
-              <template #bodyCell="{ column, record }">
+              <template #bodyCell="{ column, record, index }">
+                <template v-if="column.key === 'index'">
+                  {{ index + 1 }}
+                </template>
                 <template v-if="column.key === 'gender'">
                   {{ record.gender === 1 ? '男' : '女' }}
                 </template>
                 <template v-if="column.key === 'avatar'">
-                  <a-avatar>
-                    <img :src="record.avatar" />
-                  </a-avatar>
+                  <a-avatar :src="record.avatar"> </a-avatar>
                 </template>
                 <template v-if="column.key === 'actions'">
                   <a-button danger @click="onDeleteItem(record)" size="small">删除</a-button>
@@ -70,101 +58,109 @@
 <script lang="ts">
   import { post } from '@/api/http'
   import { getTableList } from '@/api/url'
-  import { usePagination, useRowKey, useTable, useTableColumn, useTableHeight } from '@/hooks/table'
+  import {
+    usePagination,
+    useRowKey,
+    useRowSelection,
+    useTable,
+    useTableColumn,
+    useTableHeight,
+  } from '@/hooks/table'
   import { message, Modal } from 'ant-design-vue'
-  import { defineComponent, getCurrentInstance, onMounted, ref, shallowReactive, watch } from 'vue'
+  import { defineComponent, getCurrentInstance, onMounted, reactive, ref, watch } from 'vue'
   export default defineComponent({
     name: 'UserList',
     setup() {
       const table = useTable()
       const rowKey = useRowKey('id')
       const pagination = usePagination(doRefresh)
+      const rowSelectionObj = useRowSelection(table.selectRows.value, table.onSelectChange)
       const checkedRowKeys = [] as Array<any>
       const departmentData = [
         {
-          label: '东部地区',
+          title: '东部地区',
           key: 1,
           children: [
             {
-              label: '总裁部',
+              title: '总裁部',
               key: 11,
             },
             {
-              label: '财务部',
+              title: '财务部',
               key: 12,
             },
             {
-              label: '技术部',
+              title: '技术部',
               key: 13,
             },
             {
-              label: '销售部',
+              title: '销售部',
               key: 14,
             },
           ],
         },
         {
-          label: '西部地区',
+          title: '西部地区',
           key: 2,
           children: [
             {
-              label: '总裁部',
+              title: '总裁部',
               key: 21,
             },
             {
-              label: '财务部',
+              title: '财务部',
               key: 22,
             },
             {
-              label: '技术部',
+              title: '技术部',
               key: 23,
             },
             {
-              label: '销售部',
+              title: '销售部',
               key: 24,
             },
           ],
         },
         {
-          label: '南部地区',
+          title: '南部地区',
           key: 3,
           children: [
             {
-              label: '总裁部',
+              title: '总裁部',
               key: 31,
             },
             {
-              label: '财务部',
+              title: '财务部',
               key: 32,
             },
             {
-              label: '技术部',
+              title: '技术部',
               key: 33,
             },
             {
-              label: '销售部',
+              title: '销售部',
               key: 34,
             },
           ],
         },
         {
-          label: '北部地区',
+          title: '北部地区',
           key: 4,
           children: [
             {
-              label: '总裁部',
+              title: '总裁部',
               key: 41,
             },
             {
-              label: '财务部',
+              title: '财务部',
               key: 42,
             },
             {
-              label: '技术部',
+              title: '技术部',
               key: 43,
             },
             {
-              label: '销售部',
+              title: '销售部',
               key: 44,
             },
           ],
@@ -172,6 +168,7 @@
       ]
       const tableColumns = useTableColumn(
         [
+          table.indexColumn,
           {
             title: '名称',
             key: 'nickName',
@@ -257,24 +254,16 @@
           },
         })
       }
-      function onRowCheck(rowKeys: Array<any>) {
-        checkedRowKeys.length = 0
-        checkedRowKeys.push(...rowKeys)
-      }
       function onUpdateExpandedKeys(keys: any) {
-        getExpandedKeys.length = 0
-        getExpandedKeys.push(...keys)
+        getExpandedKeys.value = [...keys]
       }
-      function onCheckedKeys(keys: any) {
-        message.success('选中的值为--->' + JSON.stringify(keys))
-      }
-      const getExpandedKeys = shallowReactive([] as Array<number>)
+      const getExpandedKeys = ref([] as Array<number>)
       watch(
         () => expandAllFlag.value,
         (newVal) => {
           newVal
-            ? getExpandedKeys.push(...departmentData.map((it) => it.key))
-            : (getExpandedKeys.length = 0)
+            ? (getExpandedKeys.value = departmentData.map((it) => it.key))
+            : (getExpandedKeys.value = [])
         }
       )
       onMounted(async () => {
@@ -284,17 +273,15 @@
       return {
         ...table,
         rowKey,
-        pattern: ref(''),
+        rowSelectionObj,
         expandAllFlag,
         departmentData,
         tableColumns,
         pagination,
         onDeleteItem,
         onDeleteItems,
-        onRowCheck,
         getExpandedKeys,
         onUpdateExpandedKeys,
-        onCheckedKeys,
       }
     },
   })

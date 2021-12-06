@@ -1,18 +1,19 @@
 <template>
-  <a-card :content-style="{ padding: 0 }" class="table-footer-container">
-    <div class="flex justify-center">
+  <a-card :body-style="{ padding: 0 }" class="table-footer-container">
+    <div class="flex justify-center items-center">
       <a-pagination
         v-model:current="pagination.page"
         v-model:pageSize="pagination.pageSize"
         :pageSizeOptions="pagination.pageSizes"
-        show-size-changer
+        :showSizeChanger="pagination.showSizePicker"
         :total="pagination?.pageCount"
         @showSizeChange="onPageSizeChange"
+        @change="onChange"
       />
       <a-button
         v-if="showRefresh"
+        style="margin-left: 10px"
         shape="circle"
-        class="ml-1"
         size="small"
         type="primary"
         @click="refresh"
@@ -46,10 +47,9 @@
         ;(pagination as any).value.page = page
         ;(pagination as any).value.onChange()
       }
-      function onPageSizeChange(pageSize: number) {
-        ;(pagination as any).value.page = 1
+      function onPageSizeChange(current: number, pageSize: number) {
+        ;(pagination as any).value.page = current
         ;(pagination as any).value.pageSize = pageSize
-        ;(pagination as any).value.onPageSizeChange()
       }
       function refresh() {
         ;(pagination as any).value.onChange()
