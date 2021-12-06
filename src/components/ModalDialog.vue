@@ -6,6 +6,8 @@
     :style="bodyStyle"
     cancelText="取消"
     okText="确定"
+    @ok="onConfirm"
+    @cancel="onCancel"
   >
     <div :style="{ maxHeight: '50vh', overflow: 'auto' }">
       <slot name="content"></slot>
@@ -32,14 +34,12 @@
     emits: ['confirm', 'cancel'],
     setup(props, { emit }) {
       const showModal = ref(false)
-      const header = ref<HTMLElement | null>()
       const layoutStore = useLayoutStore()
       const bodyStyle = computed(() => ({
         width: layoutStore.state.device === 'mobile' ? '80%' : '50%',
       }))
       function toggle() {
         showModal.value = !showModal.value
-        console.log(showModal)
         return Promise.resolve(showModal.value)
       }
       function show() {

@@ -14,7 +14,7 @@ body,
   box-sizing: border-box;
 }
 
-div::-webkit-scrollbar, ul::-webkit-scrollbar{
+ul::-webkit-scrollbar{
   width: 0px;
   height: 0px;
   /* background-color: #eee; */

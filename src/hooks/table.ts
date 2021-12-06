@@ -24,25 +24,27 @@ interface Table {
 }
 
 export const useTableHeight = async function (currentIns: any): Promise<number> {
-  const clientHeight = document.body.clientHeight
   return new Promise((resolve) => {
     setTimeout(() => {
+      const clientHeight =
+        document.querySelector('.main-section')?.getBoundingClientRect().height || 0
+      const tableHeaderHeight =
+        document.querySelector('.ant-table-header')?.getBoundingClientRect().height || 0
+      console.log(tableHeaderHeight)
       if (currentIns) {
-        let tempHeight = 0
+        let tempHeight = tableHeaderHeight
         if (currentIns.refs.tableHeaderRef) {
-          const header = (currentIns.refs as any).tableHeaderRef.$el.nextElementSibling
-          tempHeight += header.offsetTop + header.clientHeight
+          const header = (currentIns.refs as any).tableHeaderRef.$el
+          tempHeight += header.clientHeight
         }
         if (currentIns.refs.tableFooterRef) {
-          const footer = (currentIns.refs as any).tableFooterRef.$el
-          tempHeight += footer.clientHeight + 65
-        } else {
-          tempHeight += 60
+          tempHeight += 45
         }
+        console.log(clientHeight, tempHeight)
         resolve(clientHeight - tempHeight)
       }
       resolve(150)
-    }, 1000)
+    }, 500)
   })
 }
 

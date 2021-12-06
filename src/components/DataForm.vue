@@ -2,7 +2,7 @@
   import type { FormItem as MyFormItemType } from '@/types/components'
   import { FormProps, Form, message, FormItem } from 'ant-design-vue'
   import { computed, defineComponent, h, PropType, ref, toRef } from 'vue'
-  import 'ant-design-vue/lib/form/style/index.css'
+  // import 'ant-design-vue/lib/form/style/index.css'
   export default defineComponent({
     name: 'DataForm',
     props: {
@@ -16,7 +16,7 @@
       },
     },
     setup(props) {
-      const dataForm = ref<typeof Form | null>(null)
+      const dataForm = ref()
       const options = toRef(props, 'options')
       const __formConfig = computed(() => props.formConfig)
       function reset() {

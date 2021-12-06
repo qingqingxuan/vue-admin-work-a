@@ -1,7 +1,7 @@
 <template>
   <a-card :content-style="{ padding: 0 }" class="table-footer-container">
     <div class="flex justify-center">
-      <n-pagination
+      <a-pagination
         v-model:current="pagination.page"
         v-model:pageSize="pagination.pageSize"
         :pageSizeOptions="pagination.pageSizes"
@@ -18,7 +18,7 @@
         @click="refresh"
       >
         <template #icon>
-          <RefreshIcon />
+          <ReloadOutlined />
         </template>
       </a-button>
     </div>

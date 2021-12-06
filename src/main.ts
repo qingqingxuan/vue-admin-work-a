@@ -7,6 +7,7 @@ import { DeviceType } from './types/store'
 import './utils/router'
 import '../mock'
 import store, { key } from './store/store'
+import 'ant-design-vue/dist/antd.css'
 import './styles/theme/antd.dark.min.css'
 import './styles/theme/antd.min.css'
 

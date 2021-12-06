@@ -33,7 +33,7 @@
       class="main-base-style scrollbar"
       :class="[state.theme === 'light' ? 'main-base-light-theme' : 'main-base-dark-theme']"
     >
-      <section class="main-section">
+      <section class="main-section" :class="{ 'main-section__overflow-y': state.isFixedNavBar }">
         <Main />
       </section>
       <section class="footer-wrapper">
@@ -139,8 +139,11 @@
       background-color: #333333;
     }
     .main-section {
-      min-height: calc(100% - @footerHeight - 5px);
+      min-height: calc(100% - 10px - @footerHeight);
       overflow-x: hidden;
+    }
+    .main-section__overflow-y {
+      overflow-y: hidden;
     }
     .fixed-nav-bar {
       position: fixed;
