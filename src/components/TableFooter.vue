@@ -19,7 +19,7 @@
         @click="refresh"
       >
         <template #icon>
-          <ReloadOutlined />
+          <ReloadOutlined style="font-size: 12px" />
         </template>
       </a-button>
     </div>

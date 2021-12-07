@@ -35,8 +35,7 @@ export const constantRoutes = [
     name: 'Index',
     meta: {
       title: 'Dashboard',
-      iconPrefix: 'iconfont',
-      icon: 'dashboard',
+      icon: 'dashboard-outlined',
     },
     children: [
       {
@@ -47,7 +46,6 @@ export const constantRoutes = [
           title: '主控台',
           affix: true,
           cacheable: true,
-          iconPrefix: 'iconfont',
           icon: 'MenuOutlined',
         },
       },
@@ -57,7 +55,6 @@ export const constantRoutes = [
         component: (): any => import('@/views/index/work-place.vue'),
         meta: {
           title: '工作台',
-          iconPrefix: 'iconfont',
           icon: 'MenuOutlined',
         },
       },

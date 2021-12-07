@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 import path from 'path-browserify'
 import { SplitTab, RouteRecordRawWithHidden } from '../types/store'
 import { ref } from 'vue'
+import { DataNode } from 'ant-design-vue/lib/vc-tree-select/interface'
 
 export function isExternal(path: string) {
   return /^(https?:|mailto:|tel:)/.test(path)
@@ -120,8 +121,12 @@ export function transfromMenu(originRoutes: Array<RouteRecordRawWithHidden>): Ar
         if (it.meta && it.meta.isSingle && it.children.length === 1) {
           const lastItem = it.children[0] as RouteRecordRawWithHidden
           tempMenu.key = lastItem.fullPath || tempMenu.key
-          tempMenu.label = (lastItem.meta && lastItem.meta.title ? lastItem.meta?.title : tempMenu.label) as string
-          tempMenu.icon = (lastItem.meta && lastItem.meta.icon ? lastItem.meta?.icon : tempMenu.icon) as string
+          tempMenu.label = (
+            lastItem.meta && lastItem.meta.title ? lastItem.meta?.title : tempMenu.label
+          ) as string
+          tempMenu.icon = (
+            lastItem.meta && lastItem.meta.icon ? lastItem.meta?.icon : tempMenu.icon
+          ) as string
           tempMenu.children = null
         } else {
           tempMenu.children = transfromMenu(it.children)
@@ -167,24 +172,21 @@ export function transformSplitTabMenu(routes?: Array<RouteRecordRawWithHidden>):
 //   }
 // }
 
-// export function transformTreeSelect(
-//   origin: any[],
-//   labelName: string,
-//   keyName: string
-// ): TreeSelectOption[] {
-//   const tempSelections: TreeSelectOption[] = []
-//   origin.forEach((it) => {
-//     const selection = {
-//       label: it[labelName],
-//       key: it[keyName],
-//     } as TreeSelectOption
-//     if (it.children) {
-//       selection.children = transformTreeSelect(it.children, labelName, keyName)
-//     }
-//     tempSelections.push(selection)
-//   })
-//   return tempSelections
-// }
+export function transformTreeSelect(origin: any[], labelName: string, keyName: string): DataNode[] {
+  const tempSelections: DataNode[] = []
+  origin.forEach((it) => {
+    const selection = {
+      title: it[labelName],
+      key: it[keyName],
+      value: it[keyName],
+    } as DataNode
+    if (it.children) {
+      selection.children = transformTreeSelect(it.children, labelName, keyName)
+    }
+    tempSelections.push(selection)
+  })
+  return tempSelections
+}
 
 export function findRouteByUrl(routes: Array<any>, path: string): RouteRecordRawWithHidden | null {
   if (!path || !routes) {

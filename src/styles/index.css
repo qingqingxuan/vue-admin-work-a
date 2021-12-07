@@ -34,3 +34,14 @@ div::-webkit-scrollbar-track, ul::-webkit-scrollbar-track{
 .anticon{
   display: inline-flex !important;
 }
+
+.form-item__require label::before {
+  content: '*';
+  color: #f00;
+  margin-right: 5px;
+}
+
+.form-item__no_require label::before {
+  content: '';
+  margin-right: 10px;
+}

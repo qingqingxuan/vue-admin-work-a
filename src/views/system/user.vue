@@ -6,7 +6,9 @@
           <a-input class="mr-2" placeholder="搜索" size="small" />
           <a-switch size="small" v-model:checked="expandAllFlag" />
         </a-space>
-        <a-tree v-model:expandedKeys="getExpandedKeys" :tree-data="departmentData" checkable />
+        <div class="mt-4">
+          <a-tree v-model:expandedKeys="getExpandedKeys" :tree-data="departmentData" checkable />
+        </div>
       </a-card>
     </a-col>
     <a-col :span="19">
@@ -19,7 +21,7 @@
         <TableBody>
           <template #default>
             <a-table
-              :row-selection="rowSelectionObj"
+              :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
               :loading="tableLoading"
               :data-source="dataList"
               :columns="tableColumns"
@@ -67,15 +69,14 @@
     useTableHeight,
   } from '@/hooks/table'
   import { message, Modal } from 'ant-design-vue'
-  import { defineComponent, getCurrentInstance, onMounted, reactive, ref, watch } from 'vue'
+  import { defineComponent, getCurrentInstance, onMounted, ref, watch } from 'vue'
   export default defineComponent({
     name: 'UserList',
     setup() {
       const table = useTable()
       const rowKey = useRowKey('id')
       const pagination = usePagination(doRefresh)
-      const rowSelectionObj = useRowSelection(table.selectRows.value, table.onSelectChange)
-      const checkedRowKeys = [] as Array<any>
+      const { selectedRowKeys, onSelectChange } = useRowSelection()
       const departmentData = [
         {
           title: '东部地区',
@@ -240,8 +241,12 @@
         Modal.confirm({
           title: '提示',
           content: '确定要删除此数据吗？',
+          cancelText: '取消',
+          okText: '删除',
           onOk: () => {
-            message.success('数据模拟删除成功，参数为：' + JSON.stringify(checkedRowKeys))
+            message.success(
+              '数据模拟删除成功，所选择的Keys为：' + JSON.stringify(selectedRowKeys.value)
+            )
           },
         })
       }
@@ -249,6 +254,8 @@
         Modal.confirm({
           title: '提示',
           content: '确定要删除此数据吗？',
+          cancelText: '取消',
+          okText: '删除',
           onOk: () => {
             table.dataList.splice(table.dataList.indexOf(item), 1)
           },
@@ -273,7 +280,8 @@
       return {
         ...table,
         rowKey,
-        rowSelectionObj,
+        selectedRowKeys,
+        onSelectChange,
         expandAllFlag,
         departmentData,
         tableColumns,
@@ -286,31 +294,3 @@
     },
   })
 </script>
-
-<style lang="less" scoped>
-  .avatar-container {
-    position: relative;
-    width: 30px;
-    margin: 0 auto;
-    vertical-align: middle;
-    .avatar {
-      width: 100%;
-      border-radius: 50%;
-    }
-    .avatar-vip {
-      border: 2px solid #cece1e;
-    }
-    .vip {
-      position: absolute;
-      top: 0;
-      right: -9px;
-      width: 15px;
-      transform: rotate(60deg);
-    }
-  }
-  .gender-container {
-    .gender-icon {
-      width: 20px;
-    }
-  }
-</style>

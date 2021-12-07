@@ -18,14 +18,7 @@ export interface Response {
   data: any
 }
 
-function http({
-  url,
-  data,
-  method,
-  headers,
-  beforeRequest,
-  afterRequest,
-}: HttpOption) {
+function http({ url, data, method, headers, beforeRequest, afterRequest }: HttpOption) {
   const successHandler = (res: AxiosResponse<Response>) => {
     if (res.data.code === 200) {
       return res.data
@@ -38,15 +31,10 @@ function http({
   }
   beforeRequest && beforeRequest()
   method = method || 'GET'
-  const params = Object.assign(
-    typeof data === 'function' ? data() : data || {},
-    {}
-  )
+  const params = Object.assign(typeof data === 'function' ? data() : data || {}, {})
   return method === 'GET'
     ? request.get(url, { params }).then(successHandler, failHandler)
-    : request
-        .post(url, params, { headers: headers })
-        .then(successHandler, failHandler)
+    : request.post(url, params, { headers: headers }).then(successHandler, failHandler)
 }
 
 export function get({

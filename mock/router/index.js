@@ -5,28 +5,24 @@ export const adminRoutes = [
   {
     menuUrl: '/system',
     menuName: '系统管理',
-    iconPrefix: 'iconfont',
-    icon: 'setting',
+    icon: 'setting-outlined',
     parentPath: '',
     children: [
       {
         parentPath: '/system',
         menuUrl: '/system/department',
         menuName: '部门管理',
-        badge: 'new',
         cacheable: true,
       },
       {
         parentPath: '/system',
         menuUrl: '/system/user',
         menuName: '用户管理',
-        badge: 'dot',
       },
       {
         parentPath: '/system',
         menuUrl: '/system/role',
         menuName: '角色管理',
-        badge: '12',
       },
       {
         parentPath: '/system',
@@ -39,8 +35,7 @@ export const adminRoutes = [
   {
     menuUrl: '/list',
     menuName: '列表页面',
-    iconPrefix: 'iconfont',
-    icon: 'detail',
+    icon: 'menu-outlined',
     parentPath: '',
     children: [
       {
@@ -68,9 +63,7 @@ export const adminRoutes = [
   {
     menuUrl: '/form',
     menuName: '表单页面',
-    badge: 'dot',
-    iconPrefix: 'iconfont',
-    icon: 'file-text',
+    icon: 'form-outlined',
     parentPath: '',
     children: [
       {
@@ -95,8 +88,7 @@ export const adminRoutes = [
   {
     menuUrl: '/other',
     menuName: '功能/组件',
-    iconPrefix: 'iconfont',
-    icon: 'appstore',
+    icon: 'appstore-outlined',
     parentPath: '',
     children: [
       {
@@ -203,8 +195,7 @@ export const adminRoutes = [
   {
     menuUrl: '/result',
     menuName: '结果页面',
-    iconPrefix: 'iconfont',
-    icon: 'file-unknown',
+    icon: 'check-square-outlined',
     parentPath: '',
     children: [
       {
@@ -222,7 +213,6 @@ export const adminRoutes = [
   // {
   //   menuUrl: '/exception',
   //   menuName: '异常页面',
-  //   iconPrefix: 'iconfont',
   //   icon: 'error',
   //   parentPath: '',
   //   children: [
@@ -246,9 +236,7 @@ export const adminRoutes = [
   {
     menuUrl: '/editor',
     menuName: '编辑器',
-    badge: '12',
-    iconPrefix: 'iconfont',
-    icon: 'edit',
+    icon: 'edit-outlined',
     parentPath: '',
     children: [
       {
@@ -266,8 +254,7 @@ export const adminRoutes = [
   {
     menuUrl: '/excel',
     menuName: 'Excel',
-    iconPrefix: 'iconfont',
-    icon: 'file-excel',
+    icon: 'file-excel-outlined',
     parentPath: '',
     children: [
       {
@@ -285,8 +272,7 @@ export const adminRoutes = [
   {
     menuUrl: '/draggable',
     menuName: '拖拽',
-    iconPrefix: 'iconfont',
-    icon: 'interation',
+    icon: 'drag-outlined',
     parentPath: '',
     children: [
       // {
@@ -305,8 +291,7 @@ export const adminRoutes = [
   {
     menuUrl: '/next',
     menuName: '多级菜单',
-    iconPrefix: 'iconfont',
-    icon: 'Partition',
+    icon: 'partition-outlined',
     parentPath: '',
     children: [
       {
@@ -351,8 +336,7 @@ export const adminRoutes = [
   {
     menuUrl: '/map',
     menuName: '地图',
-    iconPrefix: 'iconfont',
-    icon: 'location',
+    icon: 'google-outlined',
     children: [
       {
         parentPath: '/map',
@@ -369,8 +353,7 @@ export const adminRoutes = [
   {
     menuUrl: '/project',
     menuName: '项目信息',
-    iconPrefix: 'iconfont',
-    icon: 'detail',
+    icon: 'unordered-list-outlined',
     isSingle: true,
     children: [
       {
@@ -385,7 +368,6 @@ export const editorRoutes = [
   {
     menuUrl: '/other',
     menuName: '功能/组件',
-    iconPrefix: 'iconfont',
     icon: 'appstore',
     parentPath: '',
     children: [
@@ -493,7 +475,6 @@ export const editorRoutes = [
   {
     menuUrl: '/next',
     menuName: '多级菜单',
-    iconPrefix: 'iconfont',
     icon: 'Partition',
     parentPath: '',
     children: [
@@ -539,7 +520,6 @@ export const editorRoutes = [
   {
     menuUrl: '/map',
     menuName: '地图',
-    iconPrefix: 'iconfont',
     icon: 'location',
     children: [
       {
@@ -557,7 +537,6 @@ export const editorRoutes = [
   {
     menuUrl: '/project',
     menuName: '项目信息',
-    iconPrefix: 'iconfont',
     icon: 'detail',
     children: [
       {

@@ -7,14 +7,12 @@ import { TableRowSelection } from 'ant-design-vue/lib/table/interface'
 interface Table {
   dataList: Array<any>
   bordered: Ref<Boolean>
-  selectRows: Ref<Array<RowSelectKey>>
   tableLoading: Ref<boolean>
   tableHeaderRef: Ref<TableHeaderType | null>
   tableFooterRef: Ref<TableFooterType | null>
   tableHeight: Ref<number>
   handleSuccess: (res: any) => Promise<any>
   useTableColumn: (columns: TableColumnType[], options: TableColumnType) => Array<any>
-  onSelectChange: (selectedRowKeys: RowSelectKey[]) => void
   selectionColumn: { type: 'selection' }
   indexColumn: {
     title: string
@@ -48,7 +46,6 @@ export const useTableHeight = async function (currentIns: any): Promise<number> 
 
 export const useTable = function (): Table {
   const dataList = shallowReactive([]) as Array<any>
-  const selectRows = ref([] as Array<RowSelectKey>)
   const tableHeaderRef = ref<TableHeaderType | null>(null)
   const tableFooterRef = ref<TableFooterType | null>(null)
   const tableHeight = ref(200)
@@ -60,20 +57,14 @@ export const useTable = function (): Table {
     dataList.push(...data)
     return Promise.resolve(data)
   }
-  const onSelectChange = (tempSelectRows: Array<RowSelectKey>) => {
-    selectRows.value = tempSelectRows
-    console.log(selectRows.value)
-  }
   return {
     dataList,
     tableHeaderRef,
     tableFooterRef,
     tableHeight,
     bordered,
-    selectRows,
     tableLoading,
     handleSuccess,
-    onSelectChange,
     useTableColumn,
     selectionColumn: {
       type: 'selection',
@@ -90,20 +81,15 @@ export const useRowKey = function (propName: string) {
 
 type RowSelectKey = string | number
 
-export const useRowSelection = function (
-  selectedRowKeys: Array<RowSelectKey> = [],
-  onChange: (selectedRowKeys: RowSelectKey[]) => void,
-  options: TableRowSelection = {}
-) {
-  return reactive(
-    Object.assign(
-      {
-        selectedRowKeys,
-        onChange,
-      } as TableRowSelection,
-      options
-    )
-  )
+export const useRowSelection = function () {
+  const selectedRowKeys = ref<Array<RowSelectKey>>([])
+  const onSelectChange = (tempSelectRows: Array<RowSelectKey>) => {
+    selectedRowKeys.value = tempSelectRows
+  }
+  return {
+    selectedRowKeys,
+    onSelectChange,
+  }
 }
 
 export const useTableColumn = function (columns: TableColumnType[], options: TableColumnType = {}) {

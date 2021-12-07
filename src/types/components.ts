@@ -33,7 +33,7 @@ export interface TableSearchItem {
 
 export interface FormItem extends TableSearchItem {
   required?: boolean
-  validator?: (value: FormItem, message: MessageApi) => boolean
+  validator?: (value?: FormItem, message?: MessageApi) => boolean
   hidden?: boolean
   type?: string
   maxLength?: number
