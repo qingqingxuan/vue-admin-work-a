@@ -55,7 +55,34 @@
       content-height="50vh"
     >
       <template #content>
-        <!-- <DataForm ref="dataForm" :options="itemFormOptions" /> -->
+        <a-form :wrapperCol="{ span: 18 }">
+          <a-form-item
+            :class="[item.required ? 'form-item__require' : 'form-item__no_require']"
+            :label="item.label"
+            v-for="item of itemFormOptions"
+            :key="item.key"
+          >
+            <template v-if="item.type === 'tree-select'">
+              <a-tree-select
+                v-model:value="item.value.value"
+                show-search
+                :fieldNames="{ label: 'menuName', key: 'menuUrl', value: 'menuUrl' }"
+                style="width: 100%"
+                :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                :placeholder="item.placeholder"
+                allow-clear
+                :tree-data="dataList"
+              >
+              </a-tree-select>
+            </template>
+            <template v-if="item.type === 'input'">
+              <a-input v-model:value="item.value.value" :placeholder="item.placeholder"></a-input>
+            </template>
+            <template v-if="item.type === 'switch'">
+              <a-switch v-model:checked="item.value.value"></a-switch>
+            </template>
+          </a-form-item>
+        </a-form>
       </template>
     </ModalDialog>
   </div>
@@ -121,52 +148,70 @@
         {
           label: '上级菜单',
           key: 'parentPath',
-          value: ref(null),
-          validator: (formItem, message) => {
-            if (!formItem?.value.value) {
-              message?.error('请选择上级菜单')
+          value: ref(undefined),
+          placeholder: '请选择上级菜单',
+          type: 'tree-select',
+        },
+        {
+          label: '菜单名称',
+          key: 'menuName',
+          required: true,
+          type: 'input',
+          placeholder: '请输入菜单名称',
+          value: ref(''),
+          validator: function () {
+            if (!this.value.value) {
+              message?.error(this.placeholder)
               return false
             }
             return true
           },
         },
         {
-          label: '菜单名称',
-          key: 'menuName',
-          required: true,
-          value: ref(null),
-        },
-        {
           label: '菜单地址',
           key: 'menuUrl',
           required: true,
-          value: ref(null),
+          value: ref(''),
+          type: 'input',
           disabled: ref(false),
+          placeholder: '请输入菜单地址',
+          validator: function () {
+            if (!this.value.value) {
+              message?.error(this.placeholder)
+              return false
+            }
+            return true
+          },
         },
         {
           label: '外链地址',
           key: 'redirect',
-          value: ref(null),
+          type: 'input',
+          placeholder: '请输入外链地址',
+          value: ref(''),
         },
         {
           label: '菜单图标',
           key: 'icon',
-          value: ref(null),
+          value: ref(''),
         },
         {
           label: '是否缓存',
           key: 'cacheable',
+          type: 'switch',
           value: ref(false),
         },
         {
           label: '是否隐藏',
           key: 'hidden',
+          type: 'switch',
           value: ref(false),
         },
         {
           label: '是否固定',
           key: 'affix',
-          value: ref(true),
+          type: 'switch',
+          value: ref(false),
         },
       ] as Array<FormItem>
       function doRefresh() {

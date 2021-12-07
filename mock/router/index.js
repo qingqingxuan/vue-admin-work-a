@@ -120,7 +120,7 @@ export const adminRoutes = [
           },
           {
             parentPath: '/other/chart',
-            menuUrl: '/other/chart/icon-selector',
+            menuUrl: '/other/chart/icon-select',
             menuName: '图标选择器',
           },
         ],
