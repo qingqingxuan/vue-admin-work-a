@@ -19,7 +19,7 @@
               {{ index + 1 }}
             </template>
             <template v-if="column.key === 'icon'">
-              <component :is="record.icon || 'MenuOutlined'" />
+              <component :is="record.icon || 'MenuOutlined'" style="font-size: 18px" />
             </template>
             <template v-if="column.key === 'cacheable'">
               <a-tag size="small" :color="record.cacheable ? 'success' : 'error'">
@@ -77,6 +77,9 @@
             </template>
             <template v-if="item.type === 'input'">
               <a-input v-model:value="item.value.value" :placeholder="item.placeholder"></a-input>
+            </template>
+            <template v-if="item.type === 'icon'">
+              <IconSelector v-model:value="item.value.value"></IconSelector>
             </template>
             <template v-if="item.type === 'switch'">
               <a-switch v-model:checked="item.value.value"></a-switch>
@@ -193,6 +196,7 @@
         {
           label: '菜单图标',
           key: 'icon',
+          type: 'icon',
           value: ref(''),
         },
         {
