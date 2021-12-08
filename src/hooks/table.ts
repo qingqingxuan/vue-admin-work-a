@@ -7,6 +7,7 @@ import { TableRowSelection } from 'ant-design-vue/lib/table/interface'
 interface Table {
   dataList: Array<any>
   bordered: Ref<Boolean>
+  striped: Ref<Boolean>
   tableLoading: Ref<boolean>
   tableHeaderRef: Ref<TableHeaderType | null>
   tableFooterRef: Ref<TableFooterType | null>
@@ -50,6 +51,7 @@ export const useTable = function (): Table {
   const tableFooterRef = ref<TableFooterType | null>(null)
   const tableHeight = ref(200)
   const bordered = ref(false)
+  const striped = ref(false)
   const tableLoading = ref(true)
   const handleSuccess = ({ data = [] }): Promise<any> => {
     tableLoading.value = false
@@ -63,6 +65,7 @@ export const useTable = function (): Table {
     tableFooterRef,
     tableHeight,
     bordered,
+    striped,
     tableLoading,
     handleSuccess,
     useTableColumn,

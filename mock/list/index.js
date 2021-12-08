@@ -146,7 +146,7 @@ Mock.mock(RegExp(getCardList), 'post', function ({ body }) {
         title: function () {
           return Random.csentence(5, 10)
         },
-        'image|1-9': 1,
+        'image|1-6': 1,
         description: function () {
           return Random.csentence(10, 15)
         },

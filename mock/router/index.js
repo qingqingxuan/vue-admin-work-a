@@ -98,20 +98,8 @@ export const adminRoutes = [
         children: [
           {
             parentPath: '/other/chart',
-            menuUrl: '/other/chart/icon',
+            menuUrl: '/other/chart/icons',
             menuName: '图标',
-            children: [
-              {
-                parentPath: '/other/chart/icon',
-                menuUrl: '/other/chart/icon/icon-font',
-                menuName: 'IconFont',
-              },
-              {
-                parentPath: '/other/chart/icon',
-                menuUrl: '/other/chart/icon/xicons',
-                menuName: 'xicons',
-              },
-            ],
           },
           {
             parentPath: '/other/chart',
@@ -167,7 +155,7 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: '/other/password-strong',
+        menuUrl: '/other/password-strong-page',
         menuName: '密码强度',
       },
       {
@@ -187,7 +175,7 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: '/other/city-selector',
+        menuUrl: '/other/city-selector-page',
         menuName: '省市区选择器',
       },
     ],
@@ -378,20 +366,8 @@ export const editorRoutes = [
         children: [
           {
             parentPath: '/other/chart',
-            menuUrl: '/other/chart/icon',
+            menuUrl: '/other/chart/icons',
             menuName: '图标',
-            children: [
-              {
-                parentPath: '/other/chart/icon',
-                menuUrl: '/other/chart/icon/icon-font',
-                menuName: 'IconFont',
-              },
-              {
-                parentPath: '/other/chart/icon',
-                menuUrl: '/other/chart/icon/xicons',
-                menuName: 'xicons',
-              },
-            ],
           },
           {
             parentPath: '/other/chart',
@@ -447,7 +423,7 @@ export const editorRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: '/other/password-strong',
+        menuUrl: '/other/password-strong-page',
         menuName: '密码强度',
       },
       {
@@ -467,7 +443,7 @@ export const editorRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: '/other/city-selector',
+        menuUrl: '/other/city-selector-page',
         menuName: '省市区选择器',
       },
     ],

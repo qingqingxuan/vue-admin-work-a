@@ -1,16 +1,14 @@
 <template>
   <a-space align="center">
-    <a-checkbox v-model:checked="border" @update-checked="updateBorder">表格边框</a-checkbox>
-    <a-checkbox v-model:checked="striped" @update-checked="updateStriped">斑马纹</a-checkbox>
+    <a-checkbox v-model:checked="border" @change="updateBorder">表格边框</a-checkbox>
+    <a-checkbox v-model:checked="striped" @change="updateStriped">斑马纹</a-checkbox>
     <a-tooltip class="item" trigger="hover" placement="top">
-      刷新页面
-      <template #trigger>
-        <a-button shape="circle" type="primary" size="small" @click="doRefresh">
-          <template #icon>
-            <ReloadOutlined />
-          </template>
-        </a-button>
-      </template>
+      <template #title> 刷新页面 </template>
+      <a-button shape="circle" type="primary" size="small" @click="doRefresh">
+        <template #icon>
+          <ReloadOutlined />
+        </template>
+      </a-button>
     </a-tooltip>
   </a-space>
 </template>

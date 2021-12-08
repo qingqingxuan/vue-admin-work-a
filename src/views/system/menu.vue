@@ -154,6 +154,9 @@
           value: ref(undefined),
           placeholder: '请选择上级菜单',
           type: 'tree-select',
+          reset: function () {
+            this.value.value = undefined
+          },
         },
         {
           label: '菜单名称',
@@ -164,10 +167,13 @@
           value: ref(''),
           validator: function () {
             if (!this.value.value) {
-              message?.error(this.placeholder)
+              message.error(this.placeholder)
               return false
             }
             return true
+          },
+          reset: function () {
+            this.value.value = ''
           },
         },
         {
@@ -180,10 +186,13 @@
           placeholder: '请输入菜单地址',
           validator: function () {
             if (!this.value.value) {
-              message?.error(this.placeholder)
+              message.error(this.placeholder)
               return false
             }
             return true
+          },
+          reset: function () {
+            this.value.value = ''
           },
         },
         {
@@ -192,30 +201,45 @@
           type: 'input',
           placeholder: '请输入外链地址',
           value: ref(''),
+          reset: function () {
+            this.value.value = ''
+          },
         },
         {
           label: '菜单图标',
           key: 'icon',
           type: 'icon',
           value: ref(''),
+          reset: function () {
+            this.value.value = ''
+          },
         },
         {
           label: '是否缓存',
           key: 'cacheable',
           type: 'switch',
           value: ref(false),
+          reset: function () {
+            this.value.value = false
+          },
         },
         {
           label: '是否隐藏',
           key: 'hidden',
           type: 'switch',
           value: ref(false),
+          reset: function () {
+            this.value.value = false
+          },
         },
         {
           label: '是否固定',
           key: 'affix',
           type: 'switch',
           value: ref(false),
+          reset: function () {
+            this.value.value = false
+          },
         },
       ] as Array<FormItem>
       function doRefresh() {
@@ -228,6 +252,9 @@
       }
       function onAddItem() {
         actionModel.value = 'add'
+        itemFormOptions.forEach((it) => {
+          it.reset && it.reset()
+        })
         modalDialog.value?.show()
       }
       function onUpdateItem(item: any) {
@@ -243,11 +270,18 @@
       }
       function onConfirm() {
         if (actionModel.value === 'add') {
-          // if (dataForm.value?.validator()) {
-          //   message.success(
-          //     '模拟创建菜单成功, 参数为:' + JSON.stringify(dataForm.value?.generatorParams())
-          //   )
-          // }
+          if (itemFormOptions.every((it) => (it.validator ? it.validator() : true))) {
+            modalDialog.value?.close()
+            message.success(
+              '模拟创建菜单成功, 参数为:' +
+                JSON.stringify(
+                  itemFormOptions.reduce((pre, cur) => {
+                    ;(pre as any)[cur.key] = cur.value.value || ''
+                    return pre
+                  }, {})
+                )
+            )
+          }
         } else {
           // if (dataForm.value?.validator()) {
           //   const params = dataForm.value?.generatorParams()

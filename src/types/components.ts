@@ -41,7 +41,7 @@ export interface FormItem extends TableSearchItem {
   disabled?: Ref<boolean> | boolean
   optionItems?: Array<SelectOptionItem>
   path?: string
-  reset?: (formItem: FormItem) => void
+  reset?: (formItem?: FormItem) => void
   render?: (formItem: FormItem) => VNode
 }
 

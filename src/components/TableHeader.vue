@@ -5,15 +5,13 @@
         <a-space>
           <slot name="table-config"></slot>
           <a-tooltip class="ml-2 mr-2" trigger="hover" v-if="showFilter">
-            <template #trigger>
-              <a-button type="primary" size="small" @click="showSearchContent = !showSearchContent">
-                <template #icon>
-                  <FilterOutlined />
-                </template>
-                筛选条件
-              </a-button>
-            </template>
-            展开筛选条件
+            <template #title> 展开筛选条件 </template>
+            <a-button type="primary" size="small" @click="showSearchContent = !showSearchContent">
+              <template #icon>
+                <FilterOutlined />
+              </template>
+              筛选条件
+            </a-button>
           </a-tooltip>
           <slot name="top-right"></slot>
         </a-space>
@@ -23,6 +21,7 @@
         placement="top"
         :getContainer="false"
         title="搜索条件"
+        :style="{ position: 'absolute' }"
         :height="searchContentHeight"
       >
         <slot name="search-content"></slot>

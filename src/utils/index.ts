@@ -3,6 +3,7 @@ import path from 'path-browserify'
 import { SplitTab, RouteRecordRawWithHidden } from '../types/store'
 import { ref } from 'vue'
 import { DataNode } from 'ant-design-vue/lib/vc-tree-select/interface'
+import { TablePropsType } from '@/types/components'
 
 export function isExternal(path: string) {
   return /^(https?:|mailto:|tel:)/.test(path)
@@ -156,21 +157,21 @@ export function transformSplitTabMenu(routes?: Array<RouteRecordRawWithHidden>):
   return tempTabs
 }
 
-// export function sortColumns(originColumns: DataTableColumn[], newColumns: TablePropsType[]) {
-//   if (!originColumns || !newColumns) {
-//     return
-//   }
-//   if (newColumns.length === 0) {
-//     originColumns.length = 0
-//   } else {
-//     const selectionItem = originColumns.find((it) => it.type === 'selection')
-//     originColumns.length = 0
-//     if (selectionItem) {
-//       originColumns.push(selectionItem)
-//     }
-//     originColumns.push(...newColumns)
-//   }
-// }
+export function sortColumns(originColumns: any[], newColumns: TablePropsType[]) {
+  if (!originColumns || !newColumns) {
+    return
+  }
+  if (newColumns.length === 0) {
+    originColumns.length = 0
+  } else {
+    const selectionItem = originColumns.find((it) => it.type === 'selection')
+    originColumns.length = 0
+    if (selectionItem) {
+      originColumns.push(selectionItem)
+    }
+    originColumns.push(...newColumns)
+  }
+}
 
 export function transformTreeSelect(origin: any[], labelName: string, keyName: string): DataNode[] {
   const tempSelections: DataNode[] = []
