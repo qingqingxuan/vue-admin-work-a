@@ -2,12 +2,13 @@
   <div class="main-container">
     <TableHeader :show-filter="false">
       <template #table-config>
+        <SortableTable class="ml-4" :columns="tableColumns" @update="onUpdateTable" />
+        <a-divider type="vertical" style="background-color: #f5f5f5" />
         <TableConfig
           @update-border="onUpdateBorder"
           @update-striped="onUpdateStriped"
           @refresh="doRefresh"
         />
-        <SortableTable class="ml-4" :columns="tableColumns" @update="onUpdateTable" />
       </template>
     </TableHeader>
     <TableBody>
