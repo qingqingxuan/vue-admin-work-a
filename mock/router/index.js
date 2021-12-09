@@ -69,19 +69,14 @@ export const adminRoutes = [
       {
         parentPath: '/form',
         menuUrl: '/form/base-form-view',
-        menuName: '动态表单',
+        menuName: '表单组件',
         cacheable: true,
       },
       {
         parentPath: '/form',
         menuUrl: '/form/advance-form',
-        menuName: '高级表单',
+        menuName: '基础表单（useForm）',
         cacheable: true,
-      },
-      {
-        parentPath: '/form',
-        menuUrl: '/form/step-form',
-        menuName: '分步表单',
       },
     ],
   },

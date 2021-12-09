@@ -24,6 +24,7 @@
   </div>
   <WaterMark />
   <Setting ref="settingRef" />
+  <SearchContent ref="searchContentRef" />
 </template>
 
 <script lang="ts">
@@ -35,11 +36,15 @@
     name: 'Layout',
     setup() {
       const settingRef = ref()
+      const searchContentRef = ref()
       const store = useLayoutStore()
       const isShowHeader = computed(() => store?.isShowHeader())
       const emitter = useEmit()
       emitter?.on('show-setting', () => {
         settingRef.value?.openDrawer()
+      })
+      emitter?.on('show-search', () => {
+        searchContentRef.value?.show()
       })
       onMounted(() => {
         handleScreenResize()
@@ -71,6 +76,7 @@
       }
       return {
         settingRef,
+        searchContentRef,
         state: store?.state,
         isShowHeader,
         closeMenu,

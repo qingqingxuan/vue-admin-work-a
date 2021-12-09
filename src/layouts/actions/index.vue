@@ -3,7 +3,7 @@
     <span v-if="state.actionItem.showSearch" class="action-item" @click="onShowSearch">
       <SearchIcon />
     </span>
-    <a-popover placement="bottom" trigger="click" :width="300">
+    <a-popover trigger="click" :width="600">
       <a-badge
         v-if="state.actionItem.showMessage"
         :count="badgeValue"
@@ -12,10 +12,8 @@
         <NotificationsIcon />
       </a-badge>
       <template #content>
-        <p>Content</p>
-        <p>Content</p>
+        <MessageContent />
       </template>
-      <!-- <PopoverMessage @clear="badgeValue = 0" /> -->
     </a-popover>
     <span v-if="state.actionItem.showRefresh" class="action-item" @click="onRefrehRoute">
       <RefreshIcon />
@@ -31,7 +29,6 @@
     <span class="action-item" @click="onShowSetting">
       <SettingIcon />
     </span>
-    <!-- <SearchContent ref="searchContentRef" /> -->
   </div>
 </template>
 
@@ -40,7 +37,6 @@
   import { message } from 'ant-design-vue'
   import { useRoute, useRouter } from 'vue-router'
   import { useLayoutStore } from '../index'
-  import { SearchContentType } from '@/types/components'
   import {
     SettingOutlined as SettingIcon,
     SearchOutlined as SearchIcon,
@@ -62,7 +58,6 @@
       ExitExpandIcon,
     },
     setup() {
-      const searchContentRef = ref<SearchContentType>()
       const showSearchContent = ref(false)
       const searchContent = ref('')
       const settingRef = ref()
@@ -72,7 +67,7 @@
       const route = useRoute()
       const emitter = useEmit()
       function onShowSearch() {
-        searchContentRef.value?.onShow()
+        emitter?.emit('show-search')
       }
       const { isSupported, toggle, isFullscreen } = useFullscreen(document.documentElement)
       function onScreenFull() {
@@ -89,7 +84,6 @@
         emitter?.emit('show-setting')
       }
       return {
-        searchContentRef,
         settingRef,
         showSearchContent,
         searchContent,

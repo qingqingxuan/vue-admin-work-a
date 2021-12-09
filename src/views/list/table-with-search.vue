@@ -31,7 +31,7 @@
               <a-date-picker v-model:value="item.value.value" />
             </template>
             <template v-if="item.type === 'time'">
-              <a-time-picker v-model:value="strValue" value-format="HH:mm:ss" />
+              <a-time-picker v-model:value="item.value.value" value-format="HH:mm:ss" />
             </template>
             <template v-if="item.type === 'check-group'">
               <a-checkbox-group v-model:value="item.value.value" :options="item.optionItems" />
@@ -75,10 +75,17 @@
 <script lang="ts">
   import { post } from '@/api/http'
   import { getTableList } from '@/api/url'
-  import { usePagination, useRowKey, useTable, useTableColumn } from '@/hooks/table'
+  import {
+    usePagination,
+    useRowKey,
+    useRowSelection,
+    useTable,
+    useTableColumn,
+  } from '@/hooks/table'
   import { DataFormType, FormItem } from '@/types/components'
   import { message } from 'ant-design-vue'
   import { defineComponent, onMounted, ref } from 'vue'
+  import type { Dayjs } from 'dayjs'
   const conditionItems: Array<FormItem> = [
     {
       key: 'name',
@@ -114,19 +121,19 @@
       key: 'date',
       label: '日期',
       type: 'date',
-      value: ref(''),
+      value: ref<Dayjs>(),
     },
     {
       key: 'time',
       label: '时间',
       type: 'time',
-      value: ref(''),
+      value: ref<string>(''),
     },
     {
       key: 'checkbox',
       label: '复选',
       type: 'check-group',
-      value: ref(''),
+      value: ref([]),
       optionItems: [
         {
           label: '选项1',
@@ -144,6 +151,7 @@
     setup() {
       const searchForm = ref<DataFormType | null>(null)
       const pagination = usePagination(doRefresh)
+      const { selectedRowKeys, onSelectChange } = useRowSelection()
       const table = useTable()
       const rowKey = useRowKey('id')
       const tableColumns = useTableColumn(
@@ -231,6 +239,8 @@
         conditionItems,
         onSearch,
         onResetSearch,
+        selectedRowKeys,
+        onSelectChange,
       }
     },
   })

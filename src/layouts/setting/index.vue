@@ -56,17 +56,6 @@
         <span>显示页签</span>
         <a-switch v-model:checked="state.isShowTabbar" @change="onShowTabbar" />
       </div>
-      <a-divider dashed>主题颜色</a-divider>
-      <a-space class="colors-wrapper">
-        <div
-          v-for="(item, index) of primartyColorList"
-          :key="index"
-          class="color-wrapper"
-          :class="{ circle: item.checked }"
-          :style="{ backgroundColor: item.value }"
-          @click="colorClick(item)"
-        ></div>
-      </a-space>
       <div style="height: 20px"></div>
       <a-divider dashed>菜单设置</a-divider>
       <div class="setting-item-wrapper">
@@ -207,78 +196,6 @@
           tipText: '分栏',
         },
       ])
-      const primartyColorList = reactive([
-        {
-          name: 'cyan',
-          value: '#18a058',
-          checked: true,
-        },
-        {
-          name: 'blue',
-          value: '#409eff',
-          checked: false,
-        },
-        {
-          name: 'red',
-          value: '#F5222D',
-          checked: false,
-        },
-        {
-          name: 'purple',
-          value: '#722ED1',
-          checked: false,
-        },
-        {
-          name: 'ee4f12',
-          value: '#ee4f12',
-          checked: false,
-        },
-        {
-          name: '0096c7',
-          value: '#0096c7',
-          checked: false,
-        },
-        {
-          name: 'ff9801',
-          value: '#ff9801',
-          checked: false,
-        },
-        {
-          name: 'ff3d68',
-          value: '#ff3d68',
-          checked: false,
-        },
-        {
-          name: '01c1d4',
-          value: '#01c1d4',
-          checked: false,
-        },
-        {
-          name: '71efa3',
-          value: '#71efa3',
-          checked: false,
-        },
-        {
-          name: '171010',
-          value: '#171010',
-          checked: false,
-        },
-        {
-          name: '78dec7',
-          value: '#78dec7',
-          checked: false,
-        },
-        {
-          name: '1768ac',
-          value: '#1768ac',
-          checked: false,
-        },
-        {
-          name: '1427df',
-          value: '#1427df',
-          checked: false,
-        },
-      ])
       const animOptions = reactive([
         {
           label: '渐隐渐现',
@@ -306,9 +223,6 @@
         })
         layoutExampleList.forEach((it) => {
           it.checked = state?.layoutMode === it.layoutId
-        })
-        primartyColorList.forEach((it) => {
-          it.checked = state?.themeOverrides.common.primaryColor === it.value
         })
       })
       function openDrawer() {
@@ -347,12 +261,6 @@
         })
         store.changeLayoutMode(item.layoutId)
       }
-      function colorClick(item: any) {
-        primartyColorList.forEach((it) => {
-          it.checked = it === item
-        })
-        store.changePrimaryColor(item)
-      }
       function isOpenWater(val: boolean) {
         store.changeOpenWaterMark(val)
       }
@@ -384,7 +292,6 @@
         themeList,
         sideExampleList,
         layoutExampleList,
-        primartyColorList,
         state,
         openDrawer,
         themeClick,
@@ -394,7 +301,6 @@
         onWaterMarkChange,
         layoutExampleClick,
         onAnimUpdate,
-        colorClick,
         openAppInfo,
         animOptions,
         menuWidth,

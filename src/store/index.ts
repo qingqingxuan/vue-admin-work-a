@@ -45,7 +45,7 @@ const originState = {
   cachedView: [],
   userInfo: {
     nickName: '超级管理员',
-    avatar: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg',
+    avatar: '',
   },
   actionItem: {
     showSearch: Setting.actionBar.isShowSearch,

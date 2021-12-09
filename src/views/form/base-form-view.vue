@@ -1,6 +1,13 @@
 <template>
   <div>
     <a-card title="请填写会议基本信息">
+      <template #extra>
+        <a-space>
+          <a-button danger @click="resetForm"> 重置 </a-button>
+          <a-button @click="valideForm"> 校验 </a-button>
+          <a-button :loading="submitLoading" type="primary" @click="submit"> 提交 </a-button>
+        </a-space>
+      </template>
       <div class="form-wrapper">
         <a-form>
           <a-form-item
@@ -47,13 +54,6 @@
             </template>
           </a-form-item>
         </a-form>
-        <div class="flex justify-center">
-          <a-space>
-            <a-button danger @click="submit"> 重置 </a-button>
-            <a-button @click="submit"> 校验 </a-button>
-            <a-button :loading="submitLoading" type="primary" @click="submit"> 提交 </a-button>
-          </a-space>
-        </div>
       </div>
     </a-card>
   </div>
@@ -68,17 +68,6 @@
     name: 'BaseFormView',
     setup() {
       const dataForm = ref<DataFormType | null>(null)
-      function submit() {
-        // if (dataForm.value?.validator()) {
-        //   submitLoading.value = true
-        //   setTimeout(() => {
-        //     submitLoading.value = false
-        //     message.success(
-        //       '提交成功，参数为：' + JSON.stringify(dataForm.value?.generatorParams())
-        //     )
-        //   }, 3000)
-        // }
-      }
       const formItems = [
         {
           label: '会议名称',
@@ -115,6 +104,9 @@
               value: '各种总',
             },
           ],
+          reset: function () {
+            this.value.vlue = undefined
+          },
         },
         {
           label: '会议类型',
@@ -133,12 +125,25 @@
               value: '1',
             },
           ],
+          validator: function () {
+            if (!this.value.value) {
+              message.error(this.placeholder)
+              return false
+            }
+            return true
+          },
+          reset: function () {
+            this.value.value = undefined
+          },
         },
         {
           label: '是否远程',
           key: 'remote',
           type: 'switch',
-          value: ref(null),
+          value: ref(false),
+          reset: function () {
+            this.value.value = false
+          },
         },
         {
           label: '所需设备',
@@ -159,6 +164,9 @@
               value: 'note',
             },
           ],
+          reset: function () {
+            this.value.value = ['tv']
+          },
         },
         {
           label: '会议内容',
@@ -172,6 +180,9 @@
           key: 'startEndDate',
           type: 'date-range',
           value: ref<Dayjs[]>([]),
+          reset: function () {
+            this.value.value = []
+          },
         },
         {
           label: '开始时间',
@@ -203,6 +214,9 @@
               value: 4,
             },
           ],
+          reset: function () {
+            this.value.value = undefined
+          },
         },
         {
           label: '与会人员',
@@ -228,6 +242,9 @@
               value: 4,
             },
           ],
+          reset: function () {
+            this.value.value = undefined
+          },
         },
         {
           label: '会议备注',
@@ -238,11 +255,40 @@
         },
       ] as FormItem[]
       const submitLoading = ref(false)
+      function submit() {
+        if (formItems.every((it) => (it.validator ? it.validator() : true))) {
+          submitLoading.value = true
+          setTimeout(() => {
+            submitLoading.value = false
+            message.success(
+              '提交成功，参数为：' +
+                JSON.stringify(
+                  formItems.reduce((pre, cur) => {
+                    ;(pre as any)[cur.key] = (cur as any).value.value
+                    return pre
+                  }, {})
+                )
+            )
+          }, 3000)
+        }
+      }
+      function resetForm() {
+        formItems.forEach((it) => {
+          it.reset ? it.reset() : (it.value.value = '')
+        })
+      }
+      function valideForm() {
+        if (formItems.every((it) => (it.validator ? it.validator() : true))) {
+          message.success('所有表单都合法')
+        }
+      }
       return {
         dataForm,
         formItems,
         submitLoading,
         submit,
+        resetForm,
+        valideForm,
       }
     },
   })
