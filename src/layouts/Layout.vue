@@ -32,6 +32,9 @@
   import { DeviceType, LayoutMode } from '../types/store'
   import { useLayoutStore } from './index'
   import useEmit from '@/hooks/useEmit'
+  import useAxios from '@/hooks/useAxios'
+  import UserTokenExpiredInterceptor from '../api/interceptors/UserTokenExpiredInterceptor'
+  import { AxiosResponse } from 'axios'
   export default defineComponent({
     name: 'Layout',
     setup() {
@@ -45,6 +48,10 @@
       })
       emitter?.on('show-search', () => {
         searchContentRef.value?.show()
+      })
+      const axios = useAxios()
+      axios.interceptors.response.use((response: AxiosResponse): AxiosResponse => {
+        return UserTokenExpiredInterceptor(response, store)
       })
       onMounted(() => {
         handleScreenResize()
