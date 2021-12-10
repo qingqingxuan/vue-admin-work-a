@@ -32,49 +32,29 @@
             </div>
           </template>
           <template v-else-if="index === 3" #extra>
-            <!-- <OrderChart ref="mOrderChart" /> -->
+            <OrderChart ref="mOrderChart" />
           </template>
         </DataItem>
       </a-col>
     </a-row>
-    <a-row :gutter="[10, 10]">
-      <a-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" :xxl="8">
-        <a-space direction="vertical" style="width: 100%">
-          <SalesChart ref="salesChart" />
-          <StudentChart ref="studentChart" />
-        </a-space>
-      </a-col>
+    <a-row :gutter="10">
       <a-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" :xxl="16">
         <a-space direction="vertical" style="width: 100%">
           <FullYearSalesChart ref="fullYearSalesChart" />
+          <div class="flex w-full">
+            <DepartmentChart class="flex-1" ref="departmentChart" />
+            <div style="width: 8px"></div>
+            <EnrollmentChannelsChart class="flex-1" ref="mOrderChart" />
+          </div>
+        </a-space>
+      </a-col>
+      <a-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" :xxl="8">
+        <a-space direction="vertical" style="width: 100%">
+          <SalesChart ref="salesChart" />
+          <StudentChart ref="enrollmentChannelsChart" />
         </a-space>
       </a-col>
     </a-row>
-    <!-- <n-grid class="mt-2">
-      <n-grid-item :span="24">
-        <FullYearSalesChart ref="fullYearSalesChart" />
-      </n-grid-item>
-    </n-grid>
-    <n-grid
-      responsive="screen"
-      cols="1 s:2 m:4 l:4 xl:4 2xl:4"
-      x-gap="5"
-      y-gap="5"
-      class="mt-2 mb-2"
-    >
-      <n-grid-item>
-        <SalesChart ref="salesChart" />
-      </n-grid-item>
-      <n-grid-item>
-        <StudentChart ref="studentChart" class="margin-top-xs" />
-      </n-grid-item>
-      <n-grid-item>
-        <EnrollmentChannelsChart ref="enrollmentChannelsChart" />
-      </n-grid-item>
-      <n-grid-item>
-        <DepartmentChart ref="departmentChart" />
-      </n-grid-item>
-    </n-grid> -->
   </div>
 </template>
 

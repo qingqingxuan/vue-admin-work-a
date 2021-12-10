@@ -20,7 +20,7 @@
   function getData() {
     const data: number[] = []
     while (data.length < 12) {
-      data.push(random(80, 150))
+      data.push(random(80, 250))
     }
     return data
   }
@@ -66,6 +66,7 @@
           },
           yAxis: {
             type: 'value',
+            max: 300,
           },
           series: [
             {
@@ -128,7 +129,7 @@
   .chart-item-container {
     width: 100%;
     .chart-item {
-      height: calc(400px + 48px);
+      height: 30vh;
     }
   }
 </style>

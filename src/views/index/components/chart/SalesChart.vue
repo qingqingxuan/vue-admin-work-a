@@ -55,7 +55,7 @@
                 width: 0,
               },
               areaStyle: {
-                opacity: 0.8,
+                opacity: 0.5,
                 color: new graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
@@ -97,7 +97,7 @@
   .chart-item-container {
     width: 100%;
     .chart-item {
-      height: 180px;
+      height: 30vh;
     }
   }
 </style>

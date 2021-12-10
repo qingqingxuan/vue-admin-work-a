@@ -44,7 +44,6 @@
           yAxis: {
             type: 'category',
             data: ['一月', '二月', '三月', '四月', '五月', '六月'],
-            boundaryGap: 0,
             axisTick: {
               show: false,
             },
@@ -62,11 +61,10 @@
               barWidth: 'auto',
               itemStyle: {
                 borderRadius: [0, 15, 15, 0],
-                opacity: 0.8,
                 color: new graphic.LinearGradient(1, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: 'rgba(12, 124, 182)',
+                    color: 'rgba(24, 144, 255)',
                   },
                   {
                     offset: 1,
@@ -104,7 +102,7 @@
   .chart-item-container {
     width: 100%;
     .chart-item {
-      height: 180px;
+      height: 30vh;
     }
   }
 </style>

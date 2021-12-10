@@ -1,11 +1,9 @@
 <template>
-  <a-card :body-style="{ padding: '10px' }" :head-style="{ padding: '0 10px' }">
-    <template #header>
-      <a-skeleton active style="width: 50%" v-if="loading" />
-      <template v-else>
-        <div class="text-sm">公司各部门人员数量</div>
-      </template>
-    </template>
+  <a-card
+    :body-style="{ padding: '10px' }"
+    :head-style="{ padding: '0 10px' }"
+    title="公司各部门人员数量"
+  >
     <div class="chart-item-container">
       <a-skeleton active v-if="loading" :repeat="4" />
       <template v-else>
@@ -106,7 +104,7 @@
   .chart-item-container {
     width: 100%;
     .chart-item {
-      height: 180px;
+      height: 30vh;
     }
   }
 </style>
