@@ -62,8 +62,6 @@ export interface StateType {
   sideBarBgColor: string
   pageAnim: string
   isShowTabbar: boolean
-  themeOverrides: any
-  sideThemeOverrides: any
   waterMark: string
   isOpenWaterMark: boolean
   isGray: boolean

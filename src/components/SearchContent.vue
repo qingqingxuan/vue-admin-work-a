@@ -3,9 +3,9 @@
     v-model:visible="visible"
     :closable="false"
     :footer="null"
-    :bodyStyle="{ padding: '10px' }"
+    :bodyStyle="{ padding: '0 10px' }"
   >
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs v-model:activeKey="activeKey" size="small">
       <a-tab-pane key="1">
         <template #tab>
           <file-search-outlined />
@@ -19,6 +19,7 @@
             :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
             placeholder="请输入菜单名称"
             allow-clear
+            size="large"
             @select="onSelectItem"
             :tree-data="searchList"
           >
@@ -36,6 +37,7 @@
             placeholder="请输入关键字"
             enter-button
             allowClear
+            size="large"
             @search="onOutSearch"
           />
         </div>

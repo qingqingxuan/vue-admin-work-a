@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview"
+    "build": "vite build",
+    "staging": "vite build  --mode staging",
+    "serve": "vite preview",
+    "tsc": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",

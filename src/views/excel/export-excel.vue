@@ -7,14 +7,7 @@
     </TableHeader>
     <TableBody ref="tableBody">
       <template #default>
-        <a-table
-          ref="tableRef"
-          :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-          :data-source="dataList"
-          :columns="tableColumns"
-          :row-key="rowKey"
-          :pagination="false"
-        >
+        <a-table ref="tableRef" :data-source="dataList" :columns="tableColumns" :pagination="false">
           <template #bodyCell="{ column, record, index }">
             <template v-if="column.key === 'index'">
               {{ index + 1 }}

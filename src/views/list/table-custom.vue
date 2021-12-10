@@ -22,9 +22,7 @@
           :columns="tableColumns"
           :pagination="false"
           :row-key="rowKey"
-          :row-class-name="
-            (_record, index) => (index % 2 === 1 && striped ? 'table-striped' : null)
-          "
+          :row-class-name="rowClassNameFun"
         >
           <template #bodyCell="{ column, record, index }">
             <template v-if="column">
@@ -145,6 +143,9 @@
       function onUpdateStriped(isStriped: boolean) {
         table.striped.value = isStriped
       }
+      function rowClassNameFun(_record: any, index: number) {
+        return index % 2 === 1 && table.striped.value ? 'table-striped' : null
+      }
       onMounted(doRefresh)
       return {
         ...table,
@@ -156,6 +157,7 @@
         doRefresh,
         onUpdateBorder,
         onUpdateStriped,
+        rowClassNameFun,
       }
     },
   })

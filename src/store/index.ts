@@ -8,14 +8,13 @@ import { RouteRecordRaw } from 'vue-router'
 import Setting from '../setting'
 import { useChangeMenuWidth } from '../hooks/useMenuWidth'
 import useGray from '../hooks/useGray'
+import useTheme from '@/hooks/useTheme'
 
 function presistSettingInfo(setting: any) {
   localStorage.setItem('setting-info', JSON.stringify(setting))
 }
 
 !localStorage.getItem('setting-info') && presistSettingInfo(Setting)
-
-const primaryColor = Setting.themeColor.split('@')[1]
 
 const originState = {
   isCollapse: false,
@@ -29,17 +28,6 @@ const originState = {
   waterMark: Setting.waterMark,
   isOpenWaterMark: Setting.isOpenWaterMark,
   isGray: Setting.isGray,
-  themeOverrides: {
-    common: {
-      primaryColor: primaryColor,
-      primaryColorHover: primaryColor,
-    },
-  },
-  sideThemeOverrides: {
-    common: {
-      cardColor: '',
-    },
-  },
   permissionRoutes: [],
   visitedView: [],
   cachedView: [],
@@ -67,6 +55,15 @@ const store = {
     if (this.state.device === DeviceType.MOBILE) {
       this.toggleCollapse(true)
       this.changeLayoutMode(LayoutMode.LTR)
+    }
+    if (this.state.theme === 'light') {
+      import('../styles/theme/antd.min.css').then(() => {
+        useTheme(document.documentElement, 'light')
+      })
+    } else {
+      import('../styles/theme/antd.dark.min.css').then(() => {
+        useTheme(document.documentElement, 'dark')
+      })
     }
     useChangeMenuWidth(Setting.sideWidth)
     useGray(Setting.isGray)
@@ -110,15 +107,6 @@ const store = {
     presistSettingInfo(
       Object.assign(Setting, {
         pageAnim,
-      })
-    )
-  },
-  changePrimaryColor(item: any) {
-    this.state.themeOverrides.common.primaryColor = item.value
-    this.state.themeOverrides.common.primaryColorHover = item.value
-    presistSettingInfo(
-      Object.assign(Setting, {
-        themeColor: item.name + '@' + item.value,
       })
     )
   },
@@ -190,22 +178,12 @@ const store = {
       waterMark: Setting.waterMark,
       isOpenWaterMark: Setting.isOpenWaterMark,
       isGray: Setting.isGray,
-      themeOverrides: {
-        common: {
-          primaryColor: '#18a058',
-        },
-      },
-      sideThemeOverrides: {
-        common: {
-          cardColor: '',
-        },
-      },
       permissionRoutes: [],
       visitedView: [],
       cachedView: [],
       userInfo: {
         nickName: '超级管理员',
-        avatar: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg',
+        avatar: '',
       },
       actionItem: {
         showSearch: Setting.actionBar.isShowSearch,

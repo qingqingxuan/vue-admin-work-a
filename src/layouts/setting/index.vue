@@ -310,20 +310,6 @@
   })
 </script>
 
-<style lang="less">
-  .dark {
-    .el-drawer {
-      background-color: #272727 !important;
-    }
-  }
-  .light,
-  .dark-side,
-  .blue-side {
-    .el-drawer {
-      background-color: #ffff !important;
-    }
-  }
-</style>
 <style lang="less" scoped>
   @width: 60px;
   .wrapper {

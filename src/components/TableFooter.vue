@@ -34,6 +34,7 @@
     props: {
       pagination: {
         type: Object,
+        default: () => ({}),
         require: true,
       },
       showRefresh: {
