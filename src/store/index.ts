@@ -9,12 +9,13 @@ import Setting from '../setting'
 import { useChangeMenuWidth } from '../hooks/useMenuWidth'
 import useGray from '../hooks/useGray'
 import useTheme from '@/hooks/useTheme'
+import { SETTING_INFO_KEY } from '@/layouts/setting/keys'
 
 function presistSettingInfo(setting: any) {
-  localStorage.setItem('setting-info', JSON.stringify(setting))
+  localStorage.setItem(SETTING_INFO_KEY, JSON.stringify(setting))
 }
 
-!localStorage.getItem('setting-info') && presistSettingInfo(Setting)
+!localStorage.getItem(SETTING_INFO_KEY) && presistSettingInfo(Setting)
 
 const originState = {
   isCollapse: false,

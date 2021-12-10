@@ -9,6 +9,7 @@ import { Layout } from '@/layouts'
 import layoutStore from '@/store'
 import { defineAsyncComponent } from 'vue'
 import LoadingComponent from '@/layouts/loading/index.vue'
+import { USER_TOKEN_KEY } from '@/layouts/setting/keys.ts'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -101,7 +102,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
 const whiteRoutes: string[] = ['/login']
 
 function isTokenExpired(): boolean {
-  const token = Cookies.get('a-admin-token')
+  const token = Cookies.get(USER_TOKEN_KEY)
   return !!token
 }
 router.beforeEach(async (to) => {

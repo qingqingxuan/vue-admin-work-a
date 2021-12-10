@@ -1,9 +1,6 @@
 <template>
   <div
-    :bordered="false"
     class="vaw-tab-split-side-bar-wrapper"
-    :content-style="{ padding: 0 }"
-    style="border-radius: 0px"
     :class="[!state.isCollapse ? 'open-status' : 'close-status', bgColor]"
   >
     <div class="tab-split-tab-wrapper">
@@ -16,8 +13,7 @@
           :class="{ 'vaw-tab-split-item-is-active': item.checked.value }"
           @click="changeTab(item)"
         >
-          <!-- <component :is="item.icon" /> -->
-          <MailOutlined />
+          <component :is="item.icon" />
           <span class="title">{{ item.label }}</span>
         </div>
       </div>
