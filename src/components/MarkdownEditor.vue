@@ -10,7 +10,7 @@
   import SimpleMDE from 'simplemde'
   import { computed, defineComponent, onMounted, ref, toRef, watch } from 'vue'
   export default defineComponent({
-    name: 'MarkdowEditor',
+    name: 'MarkdownEditor',
     props: {
       value: {
         type: String,
