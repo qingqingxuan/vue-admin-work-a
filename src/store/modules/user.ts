@@ -4,7 +4,7 @@ import { UserState, RootState } from '../types'
 import layoutStore from '../index'
 
 import Avatar from '@/assets/img_avatar.gif'
-import { USER_INFO_KEY, USER_TOKEN_KEY, USER_INFO_KEY } from '@/layouts/setting/keys'
+import { USER_INFO_KEY, USER_TOKEN_KEY } from '@/layouts/setting/keys'
 
 const defaultAvatar = Avatar
 

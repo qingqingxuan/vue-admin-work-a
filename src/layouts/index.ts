@@ -1,7 +1,7 @@
 import '../styles/transition.css'
 import store from '../store'
 import { App, inject } from 'vue'
-import { StoreType } from '../types/store'
+import type { StoreType } from '../types/store'
 import { TinyEmitter } from 'tiny-emitter'
 
 import { toHump } from '../utils'
@@ -53,10 +53,6 @@ function install(app: App, options?: any) {
 export function useLayoutStore() {
   return inject<StoreType>(key) as StoreType
 }
-
-export { default as Layout } from './Layout.vue'
-
-export { mapTwoLevelRouter } from '../utils'
 
 export default {
   install,

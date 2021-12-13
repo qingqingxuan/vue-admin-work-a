@@ -3,7 +3,7 @@ import path from 'path-browserify'
 import { SplitTab, RouteRecordRawWithHidden } from '../types/store'
 import { ref } from 'vue'
 import { DataNode } from 'ant-design-vue/lib/vc-tree-select/interface'
-import { TablePropsType } from '@/types/components'
+import type { TablePropsType } from '@/types/components'
 
 export function isExternal(path: string) {
   return /^(https?:|mailto:|tel:)/.test(path)

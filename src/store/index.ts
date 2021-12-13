@@ -8,7 +8,7 @@ import { RouteRecordRaw } from 'vue-router'
 import Setting from '../setting'
 import { useChangeMenuWidth } from '../hooks/useMenuWidth'
 import useGray from '../hooks/useGray'
-import useTheme from '@/hooks/useTheme'
+import useTheme from '../hooks/useTheme'
 import { SETTING_INFO_KEY } from '@/layouts/setting/keys'
 
 function presistSettingInfo(setting: any) {

@@ -27,8 +27,6 @@ export interface SplitTab {
   checked: Ref<UnwrapRef<boolean>>
 }
 
-// export type RouteRecordRawWithHidden = RouteRecordRaw & RouteLocationNormalized & { hidden?: boolean }
-
 export enum LayoutMode {
   LTR = 'ltr',
   LCR = 'lcr',

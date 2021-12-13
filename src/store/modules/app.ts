@@ -1,12 +1,11 @@
-import packageJson from '../../../package.json'
 import { Module } from 'vuex'
-import { AppState, RootState } from '../types'
+import type { AppState, RootState } from '../types'
 
 export const appModule: Module<AppState, RootState> = {
   namespaced: true,
   state: {
-    version: packageJson.version,
-    appName: packageJson.name,
+    version: '1.0.1',
+    appName: 'Vue Admin Work A',
   },
   getters: {
     getVersion(state): string {

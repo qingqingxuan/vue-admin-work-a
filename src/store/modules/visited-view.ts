@@ -1,5 +1,5 @@
-import { RouteRecordRawWithHidden } from './../../types/store'
-import { StoreType } from '../../types/store'
+import type { RouteRecordRawWithHidden } from './../../types/store'
+import type { StoreType } from '../../types/store'
 import VisitedView from '../../types/visited-view'
 
 const LOCAL_STOREAGE_VISITED_KEY = 'a-visited'
