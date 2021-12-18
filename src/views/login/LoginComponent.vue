@@ -35,8 +35,8 @@
           </div>
           <div class="mt-4">
             <div class="flex justify-between">
-              <a-checkbox v-model:checked="autoLogin">自动登录</a-checkbox>
-              <a>忘记密码？</a>
+              <a-checkbox v-model:checked="autoLogin" style="color: #fff">自动登录</a-checkbox>
+              <a style="color: #fff">忘记密码？</a>
             </div>
           </div>
         </div>
@@ -124,9 +124,21 @@
       height: 100%;
       width: 100%;
       & > img {
+        position: relative;
         width: 100%;
         height: 100%;
+        z-index: 1;
         object-fit: cover;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(0, 0, 0, 0.3);
       }
     }
     .form-container {
@@ -137,6 +149,7 @@
       bottom: 0;
       display: flex;
       align-items: center;
+      z-index: 9;
       transition: justify-content 0.5s linear;
       @media screen and (min-width: 966px) {
         justify-content: flex-end;
@@ -156,8 +169,8 @@
           margin-right: 0;
         }
         border-radius: 5px;
-        border: 2px solid #ffffff;
-        background-color: rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.2);
         padding: 20px 3%;
         .logo-wrapper {
           width: 60px;
