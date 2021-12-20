@@ -1,5 +1,5 @@
 <template>
-  <Scrollbar>
+  <component :is="tag">
     <a-menu
       :mode="menuMode"
       :theme="theme"
@@ -22,7 +22,7 @@
         </template>
       </template>
     </a-menu>
-  </Scrollbar>
+  </component>
 </template>
 
 <script lang="ts">
@@ -59,6 +59,7 @@
       const defaultPath = ref([] as Array<string>)
       const defaultExpandKeys = ref([] as Array<string>)
       const menuMode = computed(() => props.mode)
+      const tag = ref(menuMode.value === 'vertical' ? 'Scrollbar' : 'div')
       const theme = computed(() => {
         if (store.state.theme === 'dark') {
           return 'dark'
@@ -110,10 +111,17 @@
           handleExpandPath()
         }
       )
+      watch(
+        () => props.mode,
+        (newVal) => {
+          newVal === 'inline' ? 'Scrollbar' : 'div'
+        }
+      )
       watchEffect(() => {
         handleMenu(props.routes)
       })
       return {
+        tag,
         menuMode,
         defaultPath,
         defaultExpandKeys,
