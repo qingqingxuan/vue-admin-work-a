@@ -9,24 +9,11 @@ html,
 body,
 #app {
   height: 100vh;
+  overflow: hidden;
 }
 * {
   box-sizing: border-box;
 }
-
-ul::-webkit-scrollbar{
-  width: 0px;
-  height: 0px;
-  /* background-color: #eee; */
-}
-
-/* div::-webkit-scrollbar-thumb, ul::-webkit-scrollbar-thumb{
-  background: #3DB6A4;
-}
-
-div::-webkit-scrollbar-track, ul::-webkit-scrollbar-track{
-  background-color: #eee;
-} */
 
 .ant-btn > span{
   display: inline-flex;

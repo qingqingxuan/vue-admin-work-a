@@ -61,7 +61,7 @@
         default: 'div',
       },
     },
-    setup(props) {
+    setup(props, { expose }) {
       const sizeWidth = ref('0')
       const sizeHeight = ref('0')
       const moveX = ref(0)
@@ -109,6 +109,14 @@
         if (!props.noresize) {
           removeEventListener('resize', update)
         }
+      })
+
+      function getWrapContainer() {
+        return wrap
+      }
+
+      expose({
+        getWrapContainer,
       })
 
       return {

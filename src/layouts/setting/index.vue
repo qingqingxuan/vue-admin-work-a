@@ -1,111 +1,114 @@
 <template>
   <a-drawer
-    v-model:visible="opened"
+    :visible="opened"
     placement="right"
     title="系统设置"
     closable
     :width="state.device === 'mobile' ? '75%' : '280px'"
+    @close="onCloseDrawer"
   >
-    <div class="wrapper">
-      <a-divider dashed>主题设置</a-divider>
-      <div class="flex justify-around pb-8">
-        <div v-for="(item, index) of themeList" :key="index" class="example-wrapper">
-          <StyleExample
-            :checked="item.checked"
-            :left-bg="item.leftBg"
-            :right-top-bg="item.rightTopBg"
-            :right-bottom-bg="item.rightBottomBg"
-            :tip-text="item.tipText"
-            @click="themeClick(item)"
-          />
+    <Scrollbar>
+      <div class="wrapper">
+        <a-divider dashed>主题设置</a-divider>
+        <div class="flex justify-around pb-8">
+          <div v-for="(item, index) of themeList" :key="index" class="example-wrapper">
+            <StyleExample
+              :checked="item.checked"
+              :left-bg="item.leftBg"
+              :right-top-bg="item.rightTopBg"
+              :right-bottom-bg="item.rightBottomBg"
+              :tip-text="item.tipText"
+              @click="themeClick(item)"
+            />
+          </div>
         </div>
-      </div>
-      <a-divider dashed>侧边栏样式</a-divider>
-      <div class="flex justify-around pb-8">
-        <div
-          v-for="(item, index) of sideExampleList"
-          :key="index"
-          :span="6"
-          class="example-wrapper"
-        >
-          <StyleExample
-            :checked="item.checked"
-            :left-bg="item.leftBg"
-            :right-top-bg="item.rightTopBg"
-            :right-bottom-bg="item.rightBottomBg"
-            @click="exampleClick(item)"
-          />
+        <a-divider dashed>侧边栏样式</a-divider>
+        <div class="flex justify-around pb-8">
+          <div
+            v-for="(item, index) of sideExampleList"
+            :key="index"
+            :span="6"
+            class="example-wrapper"
+          >
+            <StyleExample
+              :checked="item.checked"
+              :left-bg="item.leftBg"
+              :right-top-bg="item.rightTopBg"
+              :right-bottom-bg="item.rightBottomBg"
+              @click="exampleClick(item)"
+            />
+          </div>
         </div>
-      </div>
-      <a-divider dashed>布局模式</a-divider>
-      <div class="flex justify-around pb-8">
-        <div v-for="(item, index) of layoutExampleList" :key="index" class="example-wrapper">
-          <StyleExample
-            :checked="item.checked"
-            :left-bg="item.leftBg"
-            :right-top-bg="item.rightTopBg"
-            :right-bottom-bg="item.rightBottomBg"
-            :class="[item.class || '']"
-            :tip-text="item.tipText"
-            @click="layoutExampleClick(item)"
-          />
+        <a-divider dashed>布局模式</a-divider>
+        <div class="flex justify-around pb-8">
+          <div v-for="(item, index) of layoutExampleList" :key="index" class="example-wrapper">
+            <StyleExample
+              :checked="item.checked"
+              :left-bg="item.leftBg"
+              :right-top-bg="item.rightTopBg"
+              :right-bottom-bg="item.rightBottomBg"
+              :class="[item.class || '']"
+              :tip-text="item.tipText"
+              @click="layoutExampleClick(item)"
+            />
+          </div>
         </div>
+        <a-divider dashed>页签显示</a-divider>
+        <div class="setting-item-wrapper">
+          <span>显示页签</span>
+          <a-switch v-model:checked="state.isShowTabbar" @change="onShowTabbar" />
+        </div>
+        <div style="height: 20px"></div>
+        <a-divider dashed>菜单设置</a-divider>
+        <div class="setting-item-wrapper">
+          <span style="width: 100px">菜单宽度</span>
+          <a-input-number v-model:value="menuWidth" size="small" :min="200" :max="400" :step="10">
+            <template #suffix>px</template>
+          </a-input-number>
+        </div>
+        <a-divider dashed>页面切换动画</a-divider>
+        <div class="setting-item-wrapper">
+          <span style="width: 100px">动画效果</span>
+          <a-select v-model:value="state.pageAnim" :options="animOptions" @select="onAnimUpdate" />
+        </div>
+        <a-divider dashed>按钮显示</a-divider>
+        <div class="setting-item-wrapper">
+          <span>固定顶部导航</span>
+          <a-switch v-model:checked="state.isFixedNavBar" :disabled="state.layoutMode === 'ttb'" />
+        </div>
+        <div class="setting-item-wrapper">
+          <span>搜索</span>
+          <a-switch v-model:checked="state.actionItem.showSearch" />
+        </div>
+        <div class="setting-item-wrapper">
+          <span>消息</span>
+          <a-switch v-model:checked="state.actionItem.showMessage" />
+        </div>
+        <div class="setting-item-wrapper">
+          <span>刷新</span>
+          <a-switch v-model:checked="state.actionItem.showRefresh" />
+        </div>
+        <div class="setting-item-wrapper">
+          <span>全屏</span>
+          <a-switch v-model:checked="state.actionItem.showFullScreen" />
+        </div>
+        <a-divider dashed>水印功能</a-divider>
+        <div class="setting-item-wrapper">
+          <span>开启水印</span>
+          <a-switch v-model:checked="state.isOpenWaterMark" @change="isOpenWater" />
+        </div>
+        <div class="p-2">
+          <div>水印内容</div>
+          <a-input class="mt-1" size="small" v-model:value="state.waterMark" />
+        </div>
+        <a-divider dashed>颜色模式</a-divider>
+        <div class="setting-item-wrapper">
+          <span>灰色模式</span>
+          <a-switch v-model:checked="state.isGray" @change="onIsGray" />
+        </div>
+        <a-divider />
       </div>
-      <a-divider dashed>页签显示</a-divider>
-      <div class="setting-item-wrapper">
-        <span>显示页签</span>
-        <a-switch v-model:checked="state.isShowTabbar" @change="onShowTabbar" />
-      </div>
-      <div style="height: 20px"></div>
-      <a-divider dashed>菜单设置</a-divider>
-      <div class="setting-item-wrapper">
-        <span style="width: 100px">菜单宽度</span>
-        <a-input-number v-model:value="menuWidth" size="small" :min="200" :max="400" :step="10">
-          <template #suffix>px</template>
-        </a-input-number>
-      </div>
-      <a-divider dashed>页面切换动画</a-divider>
-      <div class="setting-item-wrapper">
-        <span style="width: 100px">动画效果</span>
-        <a-select v-model:value="state.pageAnim" :options="animOptions" @select="onAnimUpdate" />
-      </div>
-      <a-divider dashed>按钮显示</a-divider>
-      <div class="setting-item-wrapper">
-        <span>固定顶部导航</span>
-        <a-switch v-model:checked="state.isFixedNavBar" :disabled="state.layoutMode === 'ttb'" />
-      </div>
-      <div class="setting-item-wrapper">
-        <span>搜索</span>
-        <a-switch v-model:checked="state.actionItem.showSearch" />
-      </div>
-      <div class="setting-item-wrapper">
-        <span>消息</span>
-        <a-switch v-model:checked="state.actionItem.showMessage" />
-      </div>
-      <div class="setting-item-wrapper">
-        <span>刷新</span>
-        <a-switch v-model:checked="state.actionItem.showRefresh" />
-      </div>
-      <div class="setting-item-wrapper">
-        <span>全屏</span>
-        <a-switch v-model:checked="state.actionItem.showFullScreen" />
-      </div>
-      <a-divider dashed>水印功能</a-divider>
-      <div class="setting-item-wrapper">
-        <span>开启水印</span>
-        <a-switch v-model:checked="state.isOpenWaterMark" @change="isOpenWater" />
-      </div>
-      <div class="p-2">
-        <div>水印内容</div>
-        <a-input class="mt-1" size="small" v-model:value="state.waterMark" />
-      </div>
-      <a-divider dashed>颜色模式</a-divider>
-      <div class="setting-item-wrapper">
-        <span>灰色模式</span>
-        <a-switch v-model:checked="state.isGray" @change="onIsGray" />
-      </div>
-      <a-divider />
-    </div>
+    </Scrollbar>
   </a-drawer>
 </template>
 
@@ -113,19 +116,16 @@
   import { defineComponent, onMounted, reactive, ref, watch } from 'vue'
   import { useLayoutStore } from '../index'
   import { message } from 'ant-design-vue'
-  import { ModalDialogType } from '@/types/components'
   import { useChangeMenuWidth, useMenuWidth } from '@/hooks/useMenuWidth'
   import LeftBg from '@/assets/bg_img.webp'
   import useTheme from '@/hooks/useTheme'
-  import { useCssVar } from '@vueuse/core'
   export default defineComponent({
     name: 'Setting',
     setup() {
-      const appInfoDialog = ref<ModalDialogType | null>()
+      const container = document.querySelector('.vaw-layout-container')
       const opened = ref(false)
       const store = useLayoutStore()
       const state = store?.state
-      const showContact = ref(false)
       const menuWidth = ref(useMenuWidth())
       const themeList = reactive([
         {
@@ -228,6 +228,9 @@
       function openDrawer() {
         opened.value = true
       }
+      function onCloseDrawer() {
+        opened.value = false
+      }
       function themeClick(item: any) {
         themeList.forEach((it) => {
           it.checked = it === item
@@ -273,9 +276,6 @@
       function onWaterMarkChange(val: string) {
         store.setWaterMark(val)
       }
-      function openAppInfo() {
-        appInfoDialog.value?.toggle()
-      }
       function onAnimUpdate(val: any) {
         store.changePageAnim(val as string)
       }
@@ -286,14 +286,14 @@
         }
       )
       return {
-        appInfoDialog,
-        showContact,
+        container,
         opened,
         themeList,
         sideExampleList,
         layoutExampleList,
         state,
         openDrawer,
+        onCloseDrawer,
         themeClick,
         exampleClick,
         isOpenWater,
@@ -301,7 +301,6 @@
         onWaterMarkChange,
         layoutExampleClick,
         onAnimUpdate,
-        openAppInfo,
         animOptions,
         menuWidth,
         onIsGray,

@@ -4,43 +4,28 @@
       :class="{ 'tab-humburger-wrapper': showHumburger }"
       class="flex items-center justify-center h-full"
     >
-      <span
-        class="arrow-wrapper"
-        :class="{ 'arrow-wrapper__disabled': leftArrowDisabled }"
-        @click="leftArrowClick"
-      >
+      <span class="arrow-wrapper" @click="leftArrowClick">
         <CaretLeftOutlined />
       </span>
-      <a-tabs class="flex-1">
-        <template #renderTabBar>
-          <div class="flex scrollbar" ref="scrollbar">
-            <a-button
-              v-for="item of state.visitedView"
-              :key="item.fullPath"
-              :type="currentTab === item.fullPath ? 'primary' : 'default'"
-              class="mx-1 tab-item"
-              size="small"
-              @click="itemClick(item.fullPath, $event)"
-              @contextmenu="onContextMenu(item.fullPath, $event)"
-            >
-              {{ item.meta ? item.meta.title : item.name }}
-              <span
-                v-if="!item.meta?.affix"
-                class="icon-item"
-                @click.stop="iconClick(item.fullPath)"
-              >
-                <CloseOutlined />
-              </span>
-            </a-button>
-          </div>
-        </template>
-      </a-tabs>
-      <span
-        class="arrow-wrapper"
-        :class="{ 'arrow-wrapper__disabled': rightArrowDisabled }"
-        style="transform: rotate(180deg)"
-        @click="rightArrowClick"
-      >
+      <Scrollbar ref="scrollbar" class="flex-1" wrap-class="tab-bar__wrapper">
+        <div class="flex">
+          <a-button
+            v-for="item of state.visitedView"
+            :key="item.fullPath"
+            :type="currentTab === item.fullPath ? 'primary' : 'default'"
+            class="mx-1 tab-item"
+            size="small"
+            @click="itemClick(item.fullPath, $event)"
+            @contextmenu="onContextMenu(item.fullPath, $event)"
+          >
+            {{ item.meta ? item.meta.title : item.name }}
+            <span v-if="!item.meta?.affix" class="icon-item" @click.stop="iconClick(item.fullPath)">
+              <CloseOutlined />
+            </span>
+          </a-button>
+        </div>
+      </Scrollbar>
+      <span class="arrow-wrapper" style="transform: rotate(180deg)" @click="rightArrowClick">
         <CaretLeftOutlined />
       </span>
     </div>
@@ -84,7 +69,7 @@
 <script lang="ts">
   import store from '../../store'
   import path from 'path-browserify'
-  import { defineComponent } from 'vue'
+  import { defineComponent, unref } from 'vue'
   import { RouteRecordRawWithHidden } from '../../types/store'
   import {
     CloseOutlined,
@@ -122,8 +107,6 @@
         showLeftMenu: true,
         showRightMenu: true,
         state: store.state,
-        rightArrowDisabled: false,
-        leftArrowDisabled: false,
       }
     },
     watch: {
@@ -142,7 +125,7 @@
         }
         store.addVisitedView(newVal).then((route) => {
           this.currentTab = route.fullPath || ''
-          const scrollbar = this.$refs.scrollbar as HTMLDivElement
+          const scrollbar = unref((this.$refs.scrollbar as any).getWrapContainer())
           scrollbar.scrollTo({
             left: 1000000000,
             behavior: 'smooth',
@@ -195,13 +178,12 @@
                   break
                 }
               }
-              const scrollbar = this.$refs.scrollbar as HTMLDivElement
+              const scrollbar = unref((this.$refs.scrollbar as any).getWrapContainer())
               if (currentEle) {
                 scrollbar.scrollTo({
-                  left: currentEle?.parentElement?.parentElement?.offsetLeft,
+                  left: currentEle?.offsetLeft,
                   behavior: 'smooth',
                 })
-                this.isDisabledArrow()
               }
             })
           })
@@ -216,7 +198,8 @@
         )
       },
       handleTabClick(el: HTMLElement, path: string) {
-        ;(this.$refs.scrollbar as HTMLDivElement).scrollTo({
+        const scrollbar = unref((this.$refs.scrollbar as any).getWrapContainer())
+        scrollbar.scrollTo({
           left: el.offsetLeft,
           behavior: 'smooth',
         })
@@ -328,34 +311,31 @@
         this.showContextMenu = false
       },
       leftArrowClick() {
-        const scrollbar = this.$refs.scrollbar as HTMLDivElement
+        const scrollbar = unref((this.$refs.scrollbar as any).getWrapContainer())
         const scrollX = scrollbar.scrollLeft || 0
         scrollbar.scrollTo({
           left: Math.max(0, scrollX - 200),
           behavior: 'smooth',
         })
-        this.isDisabledArrow()
       },
       rightArrowClick() {
-        const scrollbar = this.$refs.scrollbar as HTMLDivElement
+        const scrollbar = unref((this.$refs.scrollbar as any).getWrapContainer())
         const scrollX = scrollbar.scrollLeft || 0
         scrollbar.scrollTo({
           left: scrollX + 200,
           behavior: 'smooth',
         })
-        this.isDisabledArrow()
-      },
-      isDisabledArrow() {
-        setTimeout(() => {
-          const scrollbar = this.$refs.scrollbar as HTMLDivElement
-          const { scrollLeft, scrollWidth, clientWidth } = scrollbar
-          this.leftArrowDisabled = scrollLeft === 0
-          this.rightArrowDisabled = scrollLeft === scrollWidth - clientWidth
-        }, 100)
       },
     },
   })
 </script>
+
+<style>
+  .tab-bar__wrapper {
+    display: flex;
+    align-items: center;
+  }
+</style>
 
 <style lang="less" scoped>
   .vaw-tab-bar-container {
@@ -404,14 +384,6 @@
       margin-left: 0;
       transition: margin-left @transitionTime;
     }
-    .scrollbar {
-      overflow-x: scroll;
-      overflow-y: hidden;
-      &::-webkit-scrollbar {
-        height: 0;
-      }
-    }
-
     .tab-item {
       cursor: pointer;
       display: inline-flex;

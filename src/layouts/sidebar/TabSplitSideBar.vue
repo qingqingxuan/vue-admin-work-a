@@ -5,18 +5,20 @@
   >
     <div class="tab-split-tab-wrapper">
       <Logo class="tab-split-logo-wrapper" :show-title="false" />
-      <div class="tab-split-content-wrapper">
-        <div
-          v-for="item of tabs"
-          :key="item.fullPath"
-          class="label-item-wrapper"
-          :class="{ 'vaw-tab-split-item-is-active': item.checked.value }"
-          @click="changeTab(item)"
-        >
-          <component :is="item.icon" />
-          <span class="title">{{ item.label }}</span>
+      <Scrollbar>
+        <div class="tab-split-content-wrapper">
+          <div
+            v-for="item of tabs"
+            :key="item.fullPath"
+            class="label-item-wrapper"
+            :class="{ 'vaw-tab-split-item-is-active': item.checked.value }"
+            @click="changeTab(item)"
+          >
+            <component :is="item.icon" />
+            <span class="title">{{ item.label }}</span>
+          </div>
         </div>
-      </div>
+      </Scrollbar>
     </div>
     <div class="tab-split-menu-wrapper">
       <Logo class="tab-split-logo-wrapper" :show-logo="false" />

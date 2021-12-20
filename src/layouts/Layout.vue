@@ -21,9 +21,9 @@
       :class="[state.isCollapse ? 'close-shadow' : 'show-shadow']"
       @click="closeMenu"
     ></div>
+    <Setting ref="settingRef" />
   </div>
   <WaterMark />
-  <Setting ref="settingRef" />
   <SearchContent ref="searchContentRef" />
 </template>
 
