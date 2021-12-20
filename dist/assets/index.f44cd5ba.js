@@ -1,1 +1,0 @@
-import o from"./LoginComponent.7ba435ac.js";import{d as e,c as n,o as t}from"./vendor.480a1782.js";/* empty css              */import"./index.d8c8b215.js";const d=e({setup(r){return(p,s)=>(t(),n(o))}});export{d as default};
