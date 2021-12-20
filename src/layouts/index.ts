@@ -6,6 +6,7 @@ import { TinyEmitter } from 'tiny-emitter'
 
 import { toHump } from '../utils'
 import * as Icons from '@ant-design/icons-vue'
+import { Scrollbar } from '@/components/Scrollbar'
 
 function getComponentName(key: string) {
   if (!key) {
@@ -30,6 +31,7 @@ export function registerComponents(app: App) {
   Object.keys(Icons).forEach((it) => {
     app.component(it, (Icons as any)[it])
   })
+  app.component('Scrollbar', Scrollbar)
 }
 
 const key = Symbol('layout_store')

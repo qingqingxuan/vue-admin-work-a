@@ -26,7 +26,7 @@
 <script lang="ts">
   import { defineComponent, onMounted, reactive } from 'vue'
   import draggable from 'vuedraggable'
-  import * as Icons from '@ant-design/icons-vue'
+  import * as Icons from '@ant-design/icons-vue/lib/icons'
   import { toHump } from '@/utils'
   const tempIcons = Object.keys(Icons).slice(0, 100)
   interface IconItemType {
@@ -36,7 +36,7 @@
   }
   export default defineComponent({
     name: 'CardDraggable',
-    components: { draggable, ...Icons },
+    components: { draggable },
     setup() {
       const iconList = [...tempIcons]
       const list: Array<IconItemType> = reactive([])

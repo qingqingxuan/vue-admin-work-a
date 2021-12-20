@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ scrollbar: menuMode === 'inline' }">
+  <Scrollbar>
     <a-menu
       :mode="menuMode"
       :theme="theme"
@@ -22,7 +22,7 @@
         </template>
       </template>
     </a-menu>
-  </div>
+  </Scrollbar>
 </template>
 
 <script lang="ts">
@@ -160,8 +160,5 @@
   .scrollbar {
     height: calc(100vh - @logoHeight) !important;
     overflow-y: auto;
-    &::-webkit-scrollbar {
-      width: 0;
-    }
   }
 </style>
