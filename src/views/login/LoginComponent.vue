@@ -64,15 +64,15 @@
                 <PhoneIcon />
               </template>
             </a-input>
-            <div class="mt-4">
-              <a-space>
+            <div class="mt-4 flex">
+              <div class="mr-4 flex-1">
                 <a-input v-model:value="registerCode" placeholder="请输入验证码" clearable>
                   <template #prefix>
                     <PropertySafetyOutlined />
                   </template>
                 </a-input>
-                <a-button @click="onSendCode">发送验证码</a-button>
-              </a-space>
+              </div>
+              <a-button @click="onSendCode">{{ sendCodeTip }}</a-button>
             </div>
             <div class="mt-4">
               <a-input-password
@@ -129,6 +129,7 @@
     ArrowLeftOutlined,
     PropertySafetyOutlined,
   } from '@ant-design/icons-vue'
+  import { useInterval, useIntervalFn } from '@vueuse/core'
   export default defineComponent({
     name: 'Login',
     components: {
@@ -154,6 +155,8 @@
       const registerCode = ref('')
       const registerPwd = ref('')
       const registerConfirmPwd = ref('')
+      const sendCodeTip = ref('发送验证码')
+      let maxCount = 60
       const onLogin = () => {
         loading.value = true
         post({
@@ -184,7 +187,22 @@
       function onChange(mode: boolean) {
         loginMode.value = mode
       }
-      function onSendCode() {}
+      function onSendCode() {
+        if (!registerPhone.value) {
+          message.error('请输入手机号')
+          return
+        }
+        maxCount = 60
+        const interval = useIntervalFn(() => {
+          if (maxCount === 0) {
+            interval.pause()
+            sendCodeTip.value = '重新发送'
+            return
+          }
+          maxCount--
+          sendCodeTip.value = maxCount + 's'
+        }, 1000)
+      }
       return {
         username,
         password,
@@ -200,6 +218,7 @@
         registerConfirmPwd,
         onRegister,
         onSendCode,
+        sendCodeTip,
       }
     },
   })
@@ -238,10 +257,15 @@
       z-index: 9;
       justify-content: center;
       .form-wrapper {
-        margin-top: 5%;
-        width: 30%;
+        @media screen and (max-width: 996px) {
+          width: 90%;
+          margin-top: 5vh;
+        }
+        @media screen and (min-width: 996px) {
+          width: 45%;
+          margin-top: 20vh;
+        }
         max-height: 80%;
-        min-width: 50%;
         border-radius: 10px;
         background-color: #ffffff;
         box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
@@ -266,7 +290,7 @@
               left: 0;
               right: 0;
               bottom: 0;
-              background-color: rgba(17, 101, 178, 0.5);
+              background-color: rgba(0, 0, 0, 0.3);
             }
           }
           .content-wrapper {
@@ -322,8 +346,16 @@
               z-index: 2;
             }
           }
+          .wrapper-width {
+            @media screen and (max-width: 996px) {
+              width: 90%;
+            }
+            @media screen and (min-width: 996px) {
+              width: 60%;
+            }
+          }
           .login {
-            width: 50%;
+            .wrapper-width();
             margin: 0 auto;
             margin-top: 2rem;
             .title {
@@ -334,7 +366,7 @@
             }
           }
           .register {
-            width: 50%;
+            .wrapper-width();
             margin: 0 auto;
             margin-top: 2rem;
             .title {

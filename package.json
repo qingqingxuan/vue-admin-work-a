@@ -2,7 +2,7 @@
   "name": "vue-admin-work-a",
   "version": "0.0.1",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "staging": "vite build  --mode staging",
     "serve": "vite preview",

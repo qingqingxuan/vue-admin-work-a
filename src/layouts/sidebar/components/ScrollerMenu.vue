@@ -59,7 +59,7 @@
       const defaultPath = ref([] as Array<string>)
       const defaultExpandKeys = ref([] as Array<string>)
       const menuMode = computed(() => props.mode)
-      const tag = ref(menuMode.value === 'vertical' ? 'Scrollbar' : 'div')
+      const tag = ref(menuMode.value === 'inline' ? 'Scrollbar' : 'div')
       const theme = computed(() => {
         if (store.state.theme === 'dark') {
           return 'dark'

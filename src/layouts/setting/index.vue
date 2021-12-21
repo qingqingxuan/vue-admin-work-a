@@ -97,9 +97,9 @@
           <span>开启水印</span>
           <a-switch v-model:checked="state.isOpenWaterMark" @change="isOpenWater" />
         </div>
-        <div class="p-2">
-          <div>水印内容</div>
-          <a-input class="mt-1" size="small" v-model:value="state.waterMark" />
+        <div class="p-2 flex">
+          <div class="mr-4">水印内容</div>
+          <a-input class="mt-1 flex-1" size="small" v-model:value="state.waterMark" />
         </div>
         <a-divider dashed>颜色模式</a-divider>
         <div class="setting-item-wrapper">

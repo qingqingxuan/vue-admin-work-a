@@ -61,7 +61,7 @@
         </a-form>
       </template>
     </ModalDialog>
-    <ModalDialog ref="menuModalDialogRef" title="编辑菜单权限">
+    <ModalDialog ref="menuModalDialogRef" title="编辑菜单权限" @confirm="onMenuConfirm">
       <template #content>
         <a-tree
           :tree-data="menuData"
@@ -184,8 +184,8 @@
         ],
         { align: 'center' }
       )
-      const defaultCheckedKeys = shallowReactive([] as Array<string>)
-      const defaultExpandedKeys = shallowReactive([] as Array<string>)
+      const defaultCheckedKeys = ref([] as Array<string>)
+      const defaultExpandedKeys = ref([] as Array<string>)
       function doRefresh() {
         post({
           url: getRoleList,
@@ -249,12 +249,16 @@
         })
           .then((res) => {
             menuData.length = 0
-            defaultCheckedKeys.length = 0
-            defaultExpandedKeys.length = 0
-            menuData.push(...handleMenuData(res.data, defaultCheckedKeys, defaultExpandedKeys))
+            menuData.push(
+              ...handleMenuData(res.data, defaultCheckedKeys.value, defaultExpandedKeys.value)
+            )
             menuModalDialogRef.value?.toggle()
           })
           .catch(console.log)
+      }
+      function onMenuConfirm() {
+        menuModalDialogRef.value?.close()
+        message.success('提交成功: ' + JSON.stringify(defaultCheckedKeys.value))
       }
       onMounted(doRefresh)
       return {
@@ -274,6 +278,7 @@
         onShowMenu,
         onDeleteItem,
         onUpdateItem,
+        onMenuConfirm,
       }
     },
   })
