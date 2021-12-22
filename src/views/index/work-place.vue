@@ -2,7 +2,7 @@
   <div class="main-container">
     <a-card
       title="工作台"
-      :bodyStyle="{ padding: '20px' }"
+      :bodyStyle="{ padding: '15px' }"
       :headStyle="{ padding: '0 10px' }"
       size="small"
     >
@@ -14,9 +14,7 @@
             </div>
             <div class="flex flex-col justify-around ml-3.5 flex-1">
               <div class="text-lg">早上好，Andy，青春只有一次，别让自己过得不精彩</div>
-              <div class="text-sm text-gray-500">
-                <i class="el-icon-heavy-rain"></i> 今日有小雨，出门别忘记带伞哦~
-              </div>
+              <div class="text-sm text-gray-500 mt-2"> 今日有小雨，出门别忘记带伞哦~ </div>
             </div>
           </div>
         </a-col>
@@ -38,14 +36,39 @@
         </a-col>
       </a-row>
     </a-card>
+    <a-row class="mt-2 mb-2" :gutter="[10, 10]">
+      <a-col
+        :xs="12"
+        :sm="8"
+        :md="6"
+        :lg="4"
+        :xl="4"
+        :xxl="4"
+        v-for="(item, index) of fastActions"
+        :key="index"
+      >
+        <a-card
+          @click="fastActionClick(item)"
+          :bodyStyle="{ padding: '0' }"
+          :headStyle="{ padding: '0 10px' }"
+        >
+          <div class="flex flex-col items-center justify-center fast-item-wrapper">
+            <component
+              :is="item.icon"
+              :style="{ color: item.color, fontSize: '30px', fontWeight: 'bold' }"
+            />
+            <span class="mt-4 text-sm">{{ item.title }}</span>
+          </div>
+        </a-card>
+      </a-col>
+    </a-row>
     <a-row class="mt-1" :gutter="10">
-      <a-col :xs="24" :sm="24" :md="24" :lg="14" :xl="14">
+      <a-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
         <div>
           <a-card
             :bodyStyle="{ padding: '20px' }"
             :headStyle="{ padding: '0 10px' }"
             size="small"
-            hoverable
             title="我的项目"
           >
             <div class="flex">
@@ -59,28 +82,55 @@
           </a-card>
           <a-card
             :style="{ marginTop: '10px' }"
-            title="快捷操作"
-            :bodyStyle="{ padding: '20px' }"
+            title="项目进度"
+            :bodyStyle="{ padding: '0px' }"
             :headStyle="{ padding: '0 10px' }"
             size="small"
-            hoverable
           >
-            <a-row>
-              <a-col :span="8" v-for="(item, index) of fastActions" :key="index">
-                <div
-                  @click="fastActionClick(item)"
-                  class="flex flex-col items-center justify-center fast-item-wrapper"
-                >
-                  <component :is="item.icon" :style="{ color: item.color }" />
-                  <span class="mt-1">{{ item.title }}</span>
-                </div>
-              </a-col>
-            </a-row>
+            <a-table :columns="columns" :data-source="dataSource" :pagination="false">
+              <template #bodyCell="{ column, record }">
+                <template v-if="column.dataIndex === 'progress'">
+                  {{ record.progress + '%' }}
+                </template>
+                <template v-if="column.dataIndex === 'status'">
+                  <a-tag :color="record.progress === 100 ? 'success' : 'processing'">
+                    <template v-if="record.progress < 100" #icon>
+                      <sync-outlined :spin="true" />
+                    </template>
+                    {{ record.status }}
+                  </a-tag>
+                </template>
+              </template>
+            </a-table>
           </a-card>
         </div>
       </a-col>
-      <a-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
-        <StudentChart />
+      <a-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+        <a-card
+          :bodyStyle="{ padding: '0 10px' }"
+          :headStyle="{ padding: '0 10px' }"
+          size="small"
+          title="消息列表"
+        >
+          <a-list item-layout="horizontal" :data-source="messageList">
+            <template #renderItem="{ item }">
+              <a-list-item>
+                <a-list-item-meta :description="item.content">
+                  <template #title>
+                    <a>{{ item.title }}</a>
+                  </template>
+                  <template #avatar>
+                    <a-badge dot>
+                      <a-avatar
+                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                      />
+                    </a-badge>
+                  </template>
+                </a-list-item-meta>
+              </a-list-item>
+            </template>
+          </a-list>
+        </a-card>
       </a-col>
     </a-row>
   </div>
@@ -104,83 +154,90 @@
       StudentChart,
     },
     setup() {
-      const waitingItmes = [
-        {
-          content: '早上，中午，晚上上下班别忘记打卡',
-          time: '04-05',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-        },
-        {
-          content: '给经理打印文件',
-          time: '04-04',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-        },
-        {
-          content: '下班断电',
-          time: '04-03',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-        },
-        {
-          content: '等到周末的时候和同事一起去逛街，买新衣服，买新手机，买包包，各种买买买',
-          time: '04-02',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-        },
-        {
-          content: '新同事入职培训工作',
-          time: '04-01',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-        },
-        {
-          content: '给领导安排机票，酒店住宿等问题',
-          time: '03-31',
-          bgColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-        },
-      ]
-      const isShowMore = computed(() => {
-        return waitingItmes.length > 4
-      })
       const store = useStore()
       const avatar = computed(() => store.state.user.avatar)
       const tempWaitingItems = reactive([] as Array<any>)
       const showWatingMode = ref(false)
-      const toggleMore = () => {
-        showWatingMode.value = !showWatingMode.value
-        tempWaitingItems.length = 0
-        if (showWatingMode.value) {
-          tempWaitingItems.push(...waitingItmes)
-        } else {
-          tempWaitingItems.push(...waitingItmes.slice(0, 4))
-        }
-      }
       const router = useRouter()
       const fastActionClick = ({ path = '/' }) => {
         router.push(path)
       }
-      onMounted(() => {
-        tempWaitingItems.push(
-          ...(waitingItmes.length > 4 ? waitingItmes.slice(0, 4) : waitingItmes)
-        )
-      })
+      const messageList = [
+        {
+          title: 'Betty Jackson',
+          content: '明天下午带着吃饭的家伙来总经理办公室开会',
+        },
+        {
+          title: 'Cynthia Thomas',
+          content: '继续加油，做的不错',
+        },
+        {
+          title: '王宝',
+          content: '还有几天就要放假了，这几天要天天996',
+        },
+        {
+          title: '朱风堂',
+          content: '算了，想说点什么，但不知道要说什么',
+        },
+        {
+          title: '张根',
+          content: '恭喜，下个月加薪10000',
+        },
+        {
+          title: '铁子',
+          content: '晚上一起去泡澡啊~~',
+        },
+      ]
+      const dataSource = [
+        {
+          key: '1',
+          projectName: 'Arco Admin 开发',
+          beginTime: '2021-12-01',
+          endTime: '2021-12-31',
+          progress: 100,
+          status: '完成',
+        },
+        {
+          key: '2',
+          projectName: '官网开发',
+          beginTime: '2021-12-01',
+          endTime: '2021-12-31',
+          progress: 90,
+          status: '进行中',
+        },
+        {
+          key: '3',
+          projectName: '文档编写',
+          beginTime: '2021-12-01',
+          endTime: '2021-12-31',
+          progress: 80,
+          status: '进行中',
+        },
+        {
+          key: '4',
+          projectName: '各版本升级工作',
+          beginTime: '2021-12-01',
+          endTime: '2025-12-31',
+          progress: 50,
+          status: '进行中',
+        },
+      ]
       return {
-        isShowMore,
         tempWaitingItems,
         avatar,
         currentDate: date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate(),
         dataItems: [
           {
-            title: 'Vue Admin Work',
-            target: 'http://qingqingxuan.gitee.io/vue-admin-work',
-            gitee: 'https://gitee.com/qingqingxuan/vue-admin-work',
+            title: 'Vue Admin Work A',
+            target: 'http://qingqingxuan.gitee.io/vue-admin-work-a',
           },
           {
-            title: 'Vue Admin Work X',
-            target: 'http://qingqingxuan.gitee.io/vue-admin-work-x',
-            gitee: 'https://gitee.com/qingqingxuan/vue-admin-work-x',
+            title: 'Vue Admin Work P',
+            target: 'http://qingqingxuan.gitee.io/vue-admin-work-P',
           },
           {
-            title: 'Admin Work',
-            target: 'http://qingqingxuan.gitee.io/admin-work',
-            gitee: 'https://gitee.com/qingqingxuan/admin-work',
+            title: 'Arco Admin',
+            target: 'http://qingqingxuan.gitee.io/arco-admin',
           },
         ],
         fastActions: [
@@ -223,7 +280,30 @@
         ],
         showWatingMode,
         fastActionClick,
-        toggleMore,
+        messageList,
+        columns: [
+          {
+            title: '项目名',
+            dataIndex: 'projectName',
+          },
+          {
+            title: '开始时间',
+            dataIndex: 'beginTime',
+          },
+          {
+            title: '结束时间',
+            dataIndex: 'endTime',
+          },
+          {
+            title: '进度',
+            dataIndex: 'progress',
+          },
+          {
+            title: '状态',
+            dataIndex: 'status',
+          },
+        ],
+        dataSource,
       }
     },
   })
@@ -262,9 +342,7 @@
     width: 0;
   }
   .fast-item-wrapper {
-    border-right: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-    height: 80px;
+    height: 100px;
     .anticon {
       font-size: 20px;
     }

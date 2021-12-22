@@ -4,17 +4,21 @@
       <span class="title">
         {{ item.title }}
       </span>
-      <a-space class="mt-1">
-        <a-button class="mr-1" type="primary" ghost size="small" @click="preView"
-          >预览地址</a-button
-        >
-        <a-button ghost type="primary" size="small" @click="gitee">项目地址</a-button>
+      <a-space class="mt-6">
+        <a-button danger size="small" @click="preView"> 预览地址 </a-button>
+        <a-popover trigger="hover">
+          <template #content>
+            <img style="width: 150px" :src="WeiXin" alt="" />
+          </template>
+          <a-button ghost type="primary" size="small" @click="gitee">授权客服</a-button>
+        </a-popover>
       </a-space>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+  import WeiXin from '@/assets/custom_weixin.jpg'
   import { defineComponent, PropType, toRef } from 'vue'
   interface ItemData {
     title: string
@@ -35,6 +39,7 @@
     setup(props) {
       const item = toRef(props, 'item')
       return {
+        WeiXin,
         gitee: function () {
           console.log(item.value.gitee)
           window.open(item.value.gitee)

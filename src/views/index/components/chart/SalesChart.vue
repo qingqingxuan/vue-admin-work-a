@@ -55,15 +55,15 @@
                 width: 0,
               },
               areaStyle: {
-                opacity: 0.5,
+                opacity: 0.8,
                 color: new graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: 'rgba(55, 162, 255)',
+                    color: '#1890ff',
                   },
                   {
                     offset: 1,
-                    color: 'rgba(116, 21, 219)',
+                    color: '#78b2e8',
                   },
                 ]),
               },

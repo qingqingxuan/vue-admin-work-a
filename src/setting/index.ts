@@ -1,5 +1,7 @@
+import { SETTING_INFO_KEY } from '@/layouts/setting/keys'
+
 export const projectName = 'Vue Admin Work A'
-const settingInfo = JSON.parse(localStorage.getItem('setting-info') || '{}')
+const settingInfo = JSON.parse(localStorage.getItem(SETTING_INFO_KEY) || '{}')
 interface Setting {
   projectName: string
   theme: 'light' | 'dark'

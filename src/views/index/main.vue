@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <a-row :gutter="[10, 10]">
+    <a-row :gutter="[10]">
       <a-col
         :xs="24"
         :sm="12"
@@ -37,22 +37,18 @@
         </DataItem>
       </a-col>
     </a-row>
-    <a-row :gutter="10">
+    <a-row class="mt-2" :gutter="10">
       <a-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16" :xxl="16">
-        <a-space direction="vertical" style="width: 100%">
-          <FullYearSalesChart ref="fullYearSalesChart" />
-          <div class="flex w-full">
-            <DepartmentChart class="flex-1" ref="departmentChart" />
-            <div style="width: 8px"></div>
-            <EnrollmentChannelsChart class="flex-1" ref="mOrderChart" />
-          </div>
-        </a-space>
+        <FullYearSalesChart ref="fullYearSalesChart" />
+        <div class="mt-2 flex w-full">
+          <DepartmentChart class="flex-1" ref="departmentChart" />
+          <div style="width: 8px"></div>
+          <EnrollmentChannelsChart class="flex-1" ref="mOrderChart" />
+        </div>
       </a-col>
       <a-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" :xxl="8">
-        <a-space direction="vertical" style="width: 100%">
-          <SalesChart ref="salesChart" />
-          <StudentChart ref="enrollmentChannelsChart" />
-        </a-space>
+        <SalesChart ref="salesChart" />
+        <StudentChart style="margin-top: 0.5rem" ref="enrollmentChannelsChart" />
       </a-col>
     </a-row>
   </div>

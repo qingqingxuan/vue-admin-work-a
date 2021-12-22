@@ -332,7 +332,7 @@
               right: 0;
               bottom: 0;
               content: '';
-              background-color: rgba(17, 101, 178);
+              background-color: rgba(16, 54, 87, 0.5);
               border-radius: 50%;
               transform: translate(50%, -50%);
               z-index: 1;

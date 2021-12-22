@@ -1,6 +1,6 @@
 <template>
   <a-card
-    :body-style="{ padding: '10px' }"
+    :body-style="{ padding: '0px' }"
     :head-style="{ padding: '0 10px' }"
     title="公司各部门人员数量"
   >
@@ -31,7 +31,7 @@
             name: {
               textStyle: {
                 color: '#333',
-                fontSize: 10,
+                fontSize: 14,
                 backgroundColor: '#f5f5f5',
                 borderRadius: 3,
                 padding: [3, 5],
@@ -45,7 +45,7 @@
               { name: '人资', max: 5 },
               { name: '运营', max: 10 },
             ],
-            radius: 60,
+            radius: 80,
             nameGap: 8,
           },
           series: [
