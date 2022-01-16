@@ -117,7 +117,6 @@
   import { post, Response } from '@/api/http'
   import { login } from '@/api/url'
   import { UserState } from '@/store/types'
-  import { useStore } from '@/store/store'
   import { message } from 'ant-design-vue'
   import {
     MobileOutlined as PhoneIcon,
@@ -130,6 +129,7 @@
     PropertySafetyOutlined,
   } from '@ant-design/icons-vue'
   import { useInterval, useIntervalFn } from '@vueuse/core'
+  import useUserStore from '@/store/modules/user'
   export default defineComponent({
     name: 'Login',
     components: {
@@ -149,7 +149,7 @@
       const loading = ref(false)
       const router = useRouter()
       const route = useRoute()
-      const store = useStore()
+      const userStore = useUserStore()
       const loginMode = ref(true)
       const registerPhone = ref('')
       const registerCode = ref('')
@@ -167,7 +167,7 @@
           },
         })
           .then(({ data }: Response) => {
-            store.dispatch('user/saveUser', data as UserState).then(() => {
+            userStore.saveUser(data as UserState).then(() => {
               router
                 .replace({
                   path: route.query.redirect ? (route.query.redirect as string) : '/',

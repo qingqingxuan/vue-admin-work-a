@@ -1,0 +1,1 @@
+import{d as r,b as n,e as o,o as a,p as s}from"./vendor.a1e22204.js";const i=["height"],l=r({setup(c){const e=n(),t=n(0);return o(()=>{t.value=e.value.parentElement.clientHeight}),(m,p)=>(a(),s("iframe",{ref_key:"myFrame",ref:e,src:"http://qingqingxuan.gitee.io/work-p-site",width:"100%",height:t.value+"px",frameborder:"0"},null,8,i))}});export{l as default};

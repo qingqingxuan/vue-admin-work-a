@@ -22,9 +22,9 @@
       @click="closeMenu"
     ></div>
     <Setting ref="settingRef" />
+    <WaterMark />
+    <SearchContent ref="searchContentRef" />
   </div>
-  <WaterMark />
-  <SearchContent ref="searchContentRef" />
 </template>
 
 <script lang="ts">

@@ -10,7 +10,7 @@
           <template #content>
             <img style="width: 150px" :src="WeiXin" alt="" />
           </template>
-          <a-button ghost type="primary" size="small" @click="gitee">授权客服</a-button>
+          <a-button ghost type="primary" size="small">授权客服</a-button>
         </a-popover>
       </a-space>
     </div>
@@ -22,7 +22,6 @@
   import { defineComponent, PropType, toRef } from 'vue'
   interface ItemData {
     title: string
-    gitee: string
     target?: string
   }
 
@@ -40,10 +39,6 @@
       const item = toRef(props, 'item')
       return {
         WeiXin,
-        gitee: function () {
-          console.log(item.value.gitee)
-          window.open(item.value.gitee)
-        },
         preView: function () {
           window.open(item.value.target)
         },

@@ -58,7 +58,7 @@
               {{ record.gender === 1 ? '男' : '女' }}
             </template>
             <template v-if="column.key === 'avatar'">
-              <a-avatar :src="record.avatar"> </a-avatar>
+              <a-avatar>{{ record.nickName.substring(0, 1) }}</a-avatar>
             </template>
             <template v-if="column.key === 'status'">
               <a-tag color="success" size="small" v-if="record.status === 1">正常</a-tag>

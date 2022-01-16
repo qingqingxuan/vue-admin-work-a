@@ -1,10 +1,9 @@
 import router, { constantRoutes } from '../router'
 import Cookies from 'js-cookie'
 import { post } from '@/api/http'
-import store from '@/store/store'
 import { getMenuListByRoleId } from '@/api/url'
 import { RouteRecordRaw } from 'vue-router'
-import { mapTwoLevelRouter, toHump } from '.'
+import { isExternal, mapTwoLevelRouter, toHump } from '.'
 import Layout from '@/layouts/Layout.vue'
 import layoutStore from '@/store'
 import { defineAsyncComponent } from 'vue'
@@ -12,6 +11,10 @@ import LoadingComponent from '@/layouts/loading/index.vue'
 import { USER_TOKEN_KEY } from '@/layouts/setting/keys'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import useUserStore from '@/store/modules/user'
+import pinia from '@/store/pinia'
+
+const userStore = useUserStore(pinia)
 
 NProgress.configure({
   showSpinner: false,
@@ -21,7 +24,7 @@ interface OriginRoute {
   menuUrl: string
   menuName?: string
   hidden?: boolean
-  redirect?: string
+  outLink?: string
   affix?: boolean
   cacheable?: boolean
   iconPrefix?: string
@@ -37,8 +40,8 @@ function getRoutes() {
   return post({
     url: getMenuListByRoleId,
     data: {
-      userId: store.getters['user/userId'],
-      roleId: store.getters['user/roleId'],
+      userId: userStore.userId,
+      roleId: userStore.roleId,
     },
   }).then((res: any) => {
     return generatorRoutes(res.data)
@@ -78,10 +81,9 @@ function generatorRoutes(res: Array<OriginRoute>) {
   const tempRoutes: Array<RouteRecordRawWithHidden> = []
   res.forEach((it) => {
     const route: RouteRecordRawWithHidden = {
-      path: it.menuUrl,
+      path: it.outLink && isExternal(it.outLink) ? it.outLink : it.menuUrl,
       name: getNameByUrl(it.menuUrl),
       hidden: !!it.hidden,
-      redirect: it.redirect || '',
       component: isMenu(it.menuUrl) ? Layout : getComponent(it),
       meta: {
         title: it.menuName,

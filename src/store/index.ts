@@ -32,10 +32,6 @@ const originState = {
   permissionRoutes: [],
   visitedView: [],
   cachedView: [],
-  userInfo: {
-    nickName: '超级管理员',
-    avatar: '',
-  },
   actionItem: {
     showSearch: Setting.actionBar.isShowSearch,
     showMessage: Setting.actionBar.isShowMessage,
@@ -162,10 +158,6 @@ const store = {
   isEmptyPermissionRoute() {
     return !this.state.permissionRoutes || this.state.permissionRoutes.length === 0
   },
-  setUserInfo(userInfo: { nickName: string; avatar: string }) {
-    this.state.userInfo.nickName = userInfo ? userInfo.nickName || '' : ''
-    this.state.userInfo.avatar = userInfo ? userInfo.avatar || '' : ''
-  },
   reset() {
     this.state = reactive<StateType>({
       isCollapse: false,
@@ -182,10 +174,6 @@ const store = {
       permissionRoutes: [],
       visitedView: [],
       cachedView: [],
-      userInfo: {
-        nickName: '超级管理员',
-        avatar: '',
-      },
       actionItem: {
         showSearch: Setting.actionBar.isShowSearch,
         showMessage: Setting.actionBar.isShowMessage,

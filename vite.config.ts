@@ -2,9 +2,17 @@ import vue from '@vitejs/plugin-vue'
 import viteSvgIcons from 'vite-plugin-svg-icons'
 import ViteComponents, { AntDesignVueResolver } from 'vite-plugin-components'
 import path from 'path'
+import { defineConfig } from 'vite'
+import dotenv from 'dotenv'
 
-export default ({ command, mode }) => {
-  const config = {
+export default defineConfig(({ mode }) => {
+  const dotenvConfig = dotenv.config({ path: `./.env.${mode}` })
+  const dotenvObj = dotenvConfig.parsed
+  return {
+    base: dotenvObj.BUILD_PATH,
+    build: {
+      outDir: dotenvObj.BUILD_OUT_DIR || 'dist',
+    },
     plugins: [
       vue(),
       viteSvgIcons({
@@ -40,19 +48,4 @@ export default ({ command, mode }) => {
       exclude: ['vue-demi'],
     },
   }
-  if (command === 'build' && mode === 'staging') {
-    return Object.assign(
-      {
-        base: '/vue-admin-work-a/',
-      },
-      config
-    )
-  } else {
-    return Object.assign(
-      {
-        base: '/',
-      },
-      config
-    )
-  }
-}
+})

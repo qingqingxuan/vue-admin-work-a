@@ -3,10 +3,10 @@
     <a-dropdown trigger="hover" :options="options" size="large" @select="handleSelect">
       <div class="action-wrapper">
         <div class="avatar">
-          <a-avatar shape="circle" :size="30" :src="state.userInfo.avatar" />
+          <a-avatar shape="circle" :size="30" :src="userStore.avatar" />
         </div>
         <span class="nick-name">
-          {{ state.userInfo.nickName }}
+          {{ userStore.nickName }}
         </span>
         <CaretDownOutlined class="tip" />
       </div>
@@ -29,12 +29,14 @@
   import { defineComponent } from 'vue'
   import { useLayoutStore } from '../index'
   import { UserOutlined, LogoutOutlined, CaretDownOutlined } from '@ant-design/icons-vue'
+  import useUserStore from '@/store/modules/user'
 
   export default defineComponent({
     name: 'VAWavatar',
     components: { UserOutlined, LogoutOutlined, CaretDownOutlined },
     setup() {
       const store = useLayoutStore()
+      const userStore = useUserStore()
       const options = [
         {
           label: '个人中心',
@@ -57,7 +59,9 @@
           okText: '退出',
           cancelText: '再想想',
           onOk: () => {
-            ;(store as any).onLogout && (store as any).onLogout()
+            userStore.logout().then(() => {
+              ;(store as any).onLogout && (store as any).onLogout()
+            })
           },
         })
       }
@@ -72,7 +76,7 @@
         }
       }
       return {
-        state: store?.state,
+        userStore,
         options,
         handleSelect,
       }

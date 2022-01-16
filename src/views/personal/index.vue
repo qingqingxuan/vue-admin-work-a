@@ -99,7 +99,7 @@
 </template>
 
 <script lang="ts">
-  import { useStore } from '@/store/store'
+  import useUserStore from '@/store/modules/user'
   import { defineComponent, ref } from 'vue'
   export default defineComponent({
     name: 'Personal',
@@ -116,7 +116,7 @@
           uploaded.value = false
         }, 1000)
       }
-      const appStore = useStore()
+      const userStore = useUserStore()
       return {
         touched,
         uploaded,
@@ -188,8 +188,8 @@
             status: 0, // 0未完成，1已完成
           },
         ],
-        avatar: appStore.state.user.avatar,
-        nickName: appStore.state.user.nickName,
+        avatar: userStore.avatar,
+        nickName: userStore.nickName,
         avatarTouchStart,
         uploadAvatar,
       }

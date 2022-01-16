@@ -197,7 +197,7 @@
         },
         {
           label: '外链地址',
-          key: 'redirect',
+          key: 'outLink',
           type: 'input',
           placeholder: '请输入外链地址',
           value: ref(''),

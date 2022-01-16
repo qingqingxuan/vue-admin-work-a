@@ -142,8 +142,8 @@
   import StudentChart from './components/StudentChart.vue'
   import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
   import { useRouter } from 'vue-router'
-  import { useStore } from '@/store/store'
   import { random } from 'lodash'
+  import useUserStore from '@/store/modules/user'
   const COLORS = ['#67C23A', '#E6A23C', '#F56C6C', '#409EFF']
   const date = new Date()
   export default defineComponent({
@@ -154,8 +154,8 @@
       StudentChart,
     },
     setup() {
-      const store = useStore()
-      const avatar = computed(() => store.state.user.avatar)
+      const userStore = useUserStore()
+      const avatar = computed(() => userStore.avatar)
       const tempWaitingItems = reactive([] as Array<any>)
       const showWatingMode = ref(false)
       const router = useRouter()

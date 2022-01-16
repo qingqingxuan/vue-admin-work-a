@@ -58,8 +58,6 @@
       ExitExpandIcon,
     },
     setup() {
-      const showSearchContent = ref(false)
-      const searchContent = ref('')
       const settingRef = ref()
       const badgeValue = ref(3)
       const store = useLayoutStore()
@@ -85,8 +83,6 @@
       }
       return {
         settingRef,
-        showSearchContent,
-        searchContent,
         badgeValue,
         state: store.state,
         onShowSearch,

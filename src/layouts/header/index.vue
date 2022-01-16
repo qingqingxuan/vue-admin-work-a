@@ -52,11 +52,9 @@
     }
     .menu-wrapper {
       flex: 1;
-      max-width: 70%;
       overflow: hidden;
     }
     .right-wrapper {
-      max-width: 30%;
       height: 100%;
       display: flex;
       align-items: center;
