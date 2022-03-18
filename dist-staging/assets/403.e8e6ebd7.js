@@ -1,1 +1,0 @@
-import{d as e,r as o,p as n,a,o as s}from"./vendor.a1e22204.js";import c from"./ExceptionStatus.a5498528.js";import{_ as r}from"./index.b5a687fa.js";const p=e({name:"Page403",components:{ExceptionStatus:c}}),i={class:"main-container"};function m(_,d,f,u,x,l){const t=o("ExceptionStatus");return s(),n("div",i,[a(t,{status:"403"})])}var $=r(p,[["render",m]]);export{$ as default};
