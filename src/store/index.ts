@@ -25,10 +25,6 @@ const originState = {
   theme: Setting.theme,
   sideBarBgColor: Setting.sideTheme,
   pageAnim: Setting.pageAnim,
-  isShowTabbar: Setting.isShowTabbar,
-  waterMark: Setting.waterMark,
-  isOpenWaterMark: Setting.isOpenWaterMark,
-  isGray: Setting.isGray,
   permissionRoutes: [],
   visitedView: [],
   cachedView: [],
@@ -63,7 +59,6 @@ const store = {
       })
     }
     useChangeMenuWidth(Setting.sideWidth)
-    useGray(Setting.isGray)
     this.restoreVisitedView()
   },
   toggleCollapse(newStatus: boolean) {
@@ -110,41 +105,6 @@ const store = {
   isShowHeader() {
     return this.state.device === 'pc' && this.state.layoutMode === 'ttb'
   },
-  setWaterMark(waterMark: string) {
-    this.state.waterMark = waterMark
-    presistSettingInfo(
-      Object.assign(Setting, {
-        waterMark,
-      })
-    )
-  },
-  changeOpenWaterMark(isOpen: boolean) {
-    this.state.isOpenWaterMark = isOpen
-    presistSettingInfo(
-      Object.assign(Setting, {
-        isOpenWaterMark: isOpen,
-      })
-    )
-  },
-  changeShowTabbar(showTabbar: boolean) {
-    this.state.isShowTabbar = showTabbar
-    presistSettingInfo(
-      Object.assign(Setting, {
-        showTabbar: showTabbar,
-      })
-    )
-  },
-  changeGray(isGray: boolean) {
-    this.state.isGray = isGray
-    presistSettingInfo(
-      Object.assign(Setting, {
-        isGray,
-      })
-    )
-    setTimeout(() => {
-      useGray(isGray)
-    }, 100)
-  },
   getSplitTabs() {
     return this.state.permissionRoutes.filter((it) => {
       return it.path && !it.hidden && it.children && it.children.length > 0
@@ -167,10 +127,6 @@ const store = {
       theme: Setting.theme,
       sideBarBgColor: Setting.sideTheme,
       pageAnim: Setting.pageAnim,
-      isShowTabbar: Setting.isShowTabbar,
-      waterMark: Setting.waterMark,
-      isOpenWaterMark: Setting.isOpenWaterMark,
-      isGray: Setting.isGray,
       permissionRoutes: [],
       visitedView: [],
       cachedView: [],
