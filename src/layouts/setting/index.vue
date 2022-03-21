@@ -53,11 +53,6 @@
             />
           </div>
         </div>
-        <a-divider dashed>页签显示</a-divider>
-        <div class="setting-item-wrapper">
-          <span>显示页签</span>
-          <a-switch v-model:checked="state.isShowTabbar" @change="onShowTabbar" />
-        </div>
         <div style="height: 20px"></div>
         <a-divider dashed>菜单设置</a-divider>
         <div class="setting-item-wrapper">
@@ -92,21 +87,6 @@
           <span>全屏</span>
           <a-switch v-model:checked="state.actionItem.showFullScreen" />
         </div>
-        <a-divider dashed>水印功能</a-divider>
-        <div class="setting-item-wrapper">
-          <span>开启水印</span>
-          <a-switch v-model:checked="state.isOpenWaterMark" @change="isOpenWater" />
-        </div>
-        <div class="p-2 flex">
-          <div class="mr-4">水印内容</div>
-          <a-input class="mt-1 flex-1" size="small" v-model:value="state.waterMark" />
-        </div>
-        <a-divider dashed>颜色模式</a-divider>
-        <div class="setting-item-wrapper">
-          <span>灰色模式</span>
-          <a-switch v-model:checked="state.isGray" @change="onIsGray" />
-        </div>
-        <a-divider />
       </div>
     </Scrollbar>
   </a-drawer>

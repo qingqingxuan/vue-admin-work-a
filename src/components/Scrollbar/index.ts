@@ -1,5 +1,5 @@
 /**
- * use vben scrollbar, thx vben
+ * use element-ui scrollbar, thx element-ui
  */
 
 import Scrollbar from './src/Scrollbar.vue'

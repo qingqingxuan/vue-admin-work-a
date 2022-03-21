@@ -10,11 +10,7 @@ interface Setting {
   layoutMode: 'ltr' | 'ttb' | 'lcr'
   sideWidth: number
   pageAnim: 'fade' | 'opacity' | 'down' | 'scale'
-  isShowTabbar: boolean
   isFixedNavBar: boolean
-  isOpenWaterMark: boolean
-  isGray: boolean
-  waterMark: string
   actionBar: {
     isShowSearch: boolean
     isShowMessage: boolean
